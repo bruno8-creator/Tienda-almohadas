@@ -5,9 +5,9 @@
   </a>
 
   <div class="header__menu">
-    <a href="{{ routes.root_url }}">Inicio</a>
+    <a href="{{ routes.root_url }}">Home</a>
     <a href="/products/air-cushion-pillows-outdoor-camping-folding-square-lnflatable-pillows-travel-backrest-plane-head-rest-pillow-camping?variant=54547796820310">AirRest</a>
-    <a href="{{ routes.all_products_collection_url }}">Colección</a>
+    <a href="{{ routes.all_products_collection_url }}">Products</a>
   </div>
 
   <div class="header__icons">
@@ -17,7 +17,7 @@
       </shopify-account>
     {% endif %}
 
-    <a class="header__cart" href="{{ routes.cart_url }}" aria-label="Carrito">
+    <a class="header__cart" href="{{ routes.cart_url }}" aria-label="Cart">
       {% if cart.item_count > 0 %}
         <sup>{{ cart.item_count }}</sup>
       {% endif %}

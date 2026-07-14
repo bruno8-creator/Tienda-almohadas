@@ -28,9 +28,9 @@
   <div class="kivo-product-panel">
     <p class="kivo-product-eyebrow">KivoRest travel comfort</p>
     <h1>{{ product.title }}</h1>
-    <div class="kivo-product-rating" aria-label="Valoración de clientes">
+    <div class="kivo-product-rating" aria-label="Customer rating">
       <span>★★★★★</span>
-      <strong>Listo para viajes largos y escapadas</strong>
+      <strong>Ready for long trips and quick getaways</strong>
     </div>
     <p class="kivo-product-price">{{ current_variant.price | money }}</p>
 
@@ -39,14 +39,14 @@
     </div>
 
     <div class="kivo-product-promises">
-      <span>Firmeza ajustable</span>
-      <span>Ligera y plegable</span>
-      <span>Ideal para avión, coche y camping</span>
+      <span>Adjustable firmness</span>
+      <span>Lightweight and foldable</span>
+      <span>Ideal for planes, cars, and camping</span>
     </div>
 
     <div class="kivo-product-form">
       {% form 'product', product %}
-        <label for="Variant-{{ section.id }}">Color / variante</label>
+        <label for="Variant-{{ section.id }}">Color / variant</label>
         <select id="Variant-{{ section.id }}" name="id">
           {% for variant in product.variants %}
             <option
@@ -63,22 +63,22 @@
           {% endfor %}
         </select>
 
-        <label for="Quantity-{{ section.id }}">Cantidad</label>
+        <label for="Quantity-{{ section.id }}">Quantity</label>
         <input id="Quantity-{{ section.id }}" type="number" name="quantity" min="1" value="1">
 
-        <input type="submit" value="Añadir al carrito">
+        <input type="submit" value="Add to cart">
         {{ form | payment_button }}
       {% endform %}
     </div>
 
     <div class="kivo-product-trust">
       <div>
-        <strong>Envío preparado</strong>
-        <span>Producto compacto y fácil de empaquetar.</span>
+        <strong>Easy to ship</strong>
+        <span>Compact product with travel-friendly packaging.</span>
       </div>
       <div>
-        <strong>Compra segura</strong>
-        <span>Pago protegido por Shopify.</span>
+        <strong>Secure checkout</strong>
+        <span>Payments protected by Shopify.</span>
       </div>
     </div>
   </div>
