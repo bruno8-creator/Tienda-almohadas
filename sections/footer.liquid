@@ -1,14 +1,16 @@
 <footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
+  <div class="footer__brand">
+    <img src="{{ 'kivorest-logo.png' | asset_url }}" alt="KivoRest" width="52" height="52">
+    <div>
+      <strong>KivoRest</strong>
+      <p>Descanso ligero para viajes, camping y cada pausa del día.</p>
+    </div>
   </div>
 
   <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
+    <a href="{{ routes.root_url }}">Inicio</a>
+    <a href="/products/air-cushion-pillows-outdoor-camping-folding-square-lnflatable-pillows-travel-backrest-plane-head-rest-pillow-camping">AirRest</a>
+    <a href="{{ routes.cart_url }}">Carrito</a>
   </div>
 
   <div class="footer__payment">
@@ -18,22 +20,91 @@
       {% endfor %}
     {% endif %}
   </div>
+
+  <div class="footer__copyright">
+    &copy; {{ 'now' | date: '%Y' }} KivoRest
+  </div>
 </footer>
 
 {% stylesheet %}
   footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr 1fr;
+    gap: 2rem;
+    align-items: start;
+    width: min(1180px, calc(100% - 32px));
+    margin: 4rem auto 1.5rem;
+    padding: 2rem;
+    border: 1px solid rgba(66, 154, 248, 0.14);
+    border-radius: 32px;
+    background: #ffffff;
+    box-shadow: 0 24px 70px rgba(34, 91, 160, 0.1);
   }
+
   footer a {
     text-decoration: none;
-    color: var(--color-foreground);
+    color: #52657a;
+    font-weight: 700;
   }
+
+  footer .footer__brand {
+    display: flex;
+    gap: 1rem;
+  }
+
+  footer .footer__brand img {
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 18px;
+    object-fit: cover;
+  }
+
+  footer .footer__brand strong {
+    color: #102033;
+    font-size: 1.35rem;
+  }
+
+  footer .footer__brand p {
+    max-width: 28rem;
+    color: #64778c;
+    margin-top: 0.3rem;
+  }
+
   footer .footer__links,
   footer .footer__payment {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
+  }
+
+  footer .footer__links {
+    flex-direction: column;
+  }
+
+  footer .footer__payment {
+    justify-content: flex-end;
+  }
+
+  footer .footer__payment svg {
+    width: 2.5rem;
+    height: auto;
+  }
+
+  footer .footer__copyright {
+    grid-column: 1 / -1;
+    color: #8a9bae;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 820px) {
+    footer {
+      grid-template-columns: 1fr;
+      padding: 1.25rem;
+    }
+
+    footer .footer__payment {
+      justify-content: flex-start;
+    }
   }
 {% endstylesheet %}
 

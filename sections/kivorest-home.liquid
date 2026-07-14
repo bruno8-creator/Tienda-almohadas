@@ -1,0 +1,452 @@
+{% liquid
+  assign featured_product = all_products['air-cushion-pillows-outdoor-camping-folding-square-lnflatable-pillows-travel-backrest-plane-head-rest-pillow-camping']
+  assign product_url = '/products/air-cushion-pillows-outdoor-camping-folding-square-lnflatable-pillows-travel-backrest-plane-head-rest-pillow-camping'
+  if featured_product != blank
+    assign product_url = featured_product.url
+  endif
+%}
+
+<section class="kivo-home full-width">
+  <div class="kivo-hero">
+    <div class="kivo-hero__copy kivo-reveal">
+      <p class="kivo-eyebrow">KivoRest AirRest</p>
+      <h1>Descanso cómodo en cualquier viaje.</h1>
+      <p class="kivo-lede">
+        Una almohada inflable, ligera y compacta para aviones, coche, camping y escapadas. Ajusta la firmeza en segundos,
+        guárdala sin ocupar espacio y descansa mejor donde estés.
+      </p>
+      <div class="kivo-actions">
+        <a class="kivo-button" href="{{ product_url }}">Comprar AirRest</a>
+        <a class="kivo-button kivo-button--ghost" href="#kivo-benefits">Ver beneficios</a>
+      </div>
+      <div class="kivo-proof" aria-label="Ventajas principales">
+        <span>Inflado rápido</span>
+        <span>47 x 30 cm</span>
+        <span>Desde {{ featured_product.price | default: 295 | money }}</span>
+      </div>
+    </div>
+
+    <div class="kivo-hero__visual kivo-reveal">
+      <div class="kivo-orbit" aria-hidden="true"></div>
+      {% if featured_product.featured_image %}
+        {{ featured_product.featured_image | image_url: width: 1100 | image_tag: class: 'kivo-product-shot', loading: 'eager' }}
+      {% else %}
+        <img class="kivo-product-shot kivo-logo-shot" src="{{ 'kivorest-logo.png' | asset_url }}" alt="KivoRest" width="720" height="720">
+      {% endif %}
+      <div class="kivo-floating-card kivo-floating-card--top">
+        <strong>Ultra portable</strong>
+        <span>Se pliega y cabe en la mochila.</span>
+      </div>
+      <div class="kivo-floating-card kivo-floating-card--bottom">
+        <strong>Firmeza ajustable</strong>
+        <span>Más aire, más soporte. Menos aire, más suavidad.</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="kivo-benefits" class="kivo-benefits">
+    <article class="kivo-benefit kivo-reveal">
+      <span>01</span>
+      <h2>Viaja sin cuello rígido</h2>
+      <p>Su apoyo envolvente ayuda a mantener una postura más cómoda durante trayectos largos.</p>
+    </article>
+    <article class="kivo-benefit kivo-reveal">
+      <span>02</span>
+      <h2>Lista en segundos</h2>
+      <p>Infla, ajusta, descansa. Cuando acabes, desinfla y guárdala sin esfuerzo.</p>
+    </article>
+    <article class="kivo-benefit kivo-reveal">
+      <span>03</span>
+      <h2>Para exterior y ciudad</h2>
+      <p>Funciona igual de bien en avión, coche, playa, camping o una pausa improvisada.</p>
+    </article>
+  </div>
+
+  <div class="kivo-showcase kivo-reveal">
+    <div>
+      <p class="kivo-eyebrow">Diseñada para moverse contigo</p>
+      <h2>Una almohada que no pide espacio, pero sí cambia el descanso.</h2>
+    </div>
+    <div class="kivo-showcase__grid">
+      <div><strong>6 colores</strong><span>Elige el estilo que va contigo.</span></div>
+      <div><strong>Compacta</strong><span>Perfecta para maleta, mochila o guantera.</span></div>
+      <div><strong>Ligera</strong><span>Hecha para llevarla siempre sin pensarlo.</span></div>
+      <div><strong>Lavable</strong><span>Mantenimiento sencillo para uso frecuente.</span></div>
+    </div>
+  </div>
+
+  <div class="kivo-product-strip kivo-reveal">
+    <div>
+      <p class="kivo-eyebrow">Producto destacado</p>
+      <h2>{{ featured_product.title | default: 'Inflatable Travel Pillow' }}</h2>
+      <p>
+        AirRest acompaña tu descanso fuera de casa con soporte regulable y un formato plegable que desaparece en el equipaje.
+      </p>
+    </div>
+    <a class="kivo-button" href="{{ product_url }}">Ver producto</a>
+  </div>
+</section>
+
+{% stylesheet %}
+  .kivo-home {
+    overflow: hidden;
+    padding: 2rem 0 5rem;
+  }
+
+  .kivo-home h1,
+  .kivo-home h2 {
+    color: #102033;
+    letter-spacing: 0;
+    line-height: 0.98;
+  }
+
+  .kivo-hero,
+  .kivo-benefits,
+  .kivo-showcase,
+  .kivo-product-strip {
+    width: min(1180px, calc(100% - 32px));
+    margin-inline: auto;
+  }
+
+  .kivo-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.96fr) minmax(320px, 1.04fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+    min-height: calc(100svh - 7.5rem);
+    padding: clamp(2rem, 5vw, 5rem) 0;
+  }
+
+  .kivo-eyebrow {
+    color: #2c91ff;
+    font-size: 0.82rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .kivo-hero h1 {
+    max-width: 10ch;
+    margin-top: 1rem;
+    font-size: clamp(3.5rem, 8vw, 7.8rem);
+  }
+
+  .kivo-lede {
+    max-width: 42rem;
+    margin-top: 1.4rem;
+    color: #52657a;
+    font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  }
+
+  .kivo-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 2rem;
+  }
+
+  .kivo-proof {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-top: 1.4rem;
+  }
+
+  .kivo-proof span {
+    border: 1px solid rgba(44, 145, 255, 0.18);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.72);
+    color: #52657a;
+    font-weight: 800;
+    padding: 0.55rem 0.8rem;
+  }
+
+  .kivo-hero__visual {
+    position: relative;
+    min-height: clamp(25rem, 52vw, 42rem);
+    display: grid;
+    place-items: center;
+  }
+
+  .kivo-orbit {
+    position: absolute;
+    width: min(92%, 36rem);
+    aspect-ratio: 1;
+    border: 1px solid rgba(44, 145, 255, 0.22);
+    border-radius: 999px;
+    animation: kivo-spin 18s linear infinite;
+  }
+
+  .kivo-orbit::before,
+  .kivo-orbit::after {
+    content: "";
+    position: absolute;
+    width: 0.75rem;
+    aspect-ratio: 1;
+    border-radius: 999px;
+    background: #2c91ff;
+    box-shadow: 0 0 24px rgba(44, 145, 255, 0.7);
+  }
+
+  .kivo-orbit::before {
+    top: 7%;
+    left: 18%;
+  }
+
+  .kivo-orbit::after {
+    right: 8%;
+    bottom: 20%;
+  }
+
+  .kivo-product-shot {
+    position: relative;
+    z-index: 2;
+    width: min(94%, 35rem);
+    max-height: 37rem;
+    object-fit: contain;
+    border-radius: 46px;
+    filter: drop-shadow(0 36px 60px rgba(35, 107, 184, 0.28));
+    animation: kivo-float 5.4s ease-in-out infinite;
+  }
+
+  .kivo-logo-shot {
+    background: rgba(255, 255, 255, 0.78);
+    padding: 2rem;
+  }
+
+  .kivo-floating-card {
+    position: absolute;
+    z-index: 3;
+    width: min(15rem, 45vw);
+    border: 1px solid rgba(44, 145, 255, 0.18);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 22px 60px rgba(34, 91, 160, 0.14);
+    backdrop-filter: blur(16px);
+    padding: 1rem;
+  }
+
+  .kivo-floating-card strong {
+    display: block;
+    color: #102033;
+  }
+
+  .kivo-floating-card span {
+    display: block;
+    color: #64778c;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+  }
+
+  .kivo-floating-card--top {
+    top: 8%;
+    right: 0;
+  }
+
+  .kivo-floating-card--bottom {
+    bottom: 8%;
+    left: 0;
+  }
+
+  .kivo-benefits {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .kivo-benefit,
+  .kivo-showcase,
+  .kivo-product-strip {
+    border: 1px solid rgba(44, 145, 255, 0.13);
+    border-radius: 32px;
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 24px 70px rgba(34, 91, 160, 0.1);
+  }
+
+  .kivo-benefit {
+    padding: 1.35rem;
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .kivo-benefit:hover {
+    box-shadow: 0 28px 80px rgba(34, 91, 160, 0.16);
+    transform: translateY(-5px);
+  }
+
+  .kivo-benefit span {
+    color: #2c91ff;
+    font-weight: 900;
+  }
+
+  .kivo-benefit h2 {
+    margin-top: 1.6rem;
+    font-size: 1.55rem;
+  }
+
+  .kivo-benefit p {
+    margin-top: 0.8rem;
+    color: #64778c;
+  }
+
+  .kivo-showcase {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 2rem;
+    align-items: center;
+    margin-top: 1rem;
+    padding: clamp(1.25rem, 4vw, 3rem);
+  }
+
+  .kivo-showcase h2 {
+    margin-top: 0.8rem;
+    font-size: clamp(2.2rem, 4vw, 4.8rem);
+  }
+
+  .kivo-showcase__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+
+  .kivo-showcase__grid div {
+    min-height: 9rem;
+    border-radius: 24px;
+    background: linear-gradient(145deg, #edf7ff, #ffffff);
+    padding: 1rem;
+  }
+
+  .kivo-showcase__grid strong,
+  .kivo-showcase__grid span {
+    display: block;
+  }
+
+  .kivo-showcase__grid strong {
+    color: #102033;
+    font-size: 1.35rem;
+  }
+
+  .kivo-showcase__grid span {
+    color: #64778c;
+    margin-top: 0.45rem;
+  }
+
+  .kivo-product-strip {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    align-items: center;
+    margin-top: 1rem;
+    padding: 1.5rem;
+  }
+
+  .kivo-product-strip h2 {
+    margin-top: 0.35rem;
+    font-size: clamp(1.8rem, 3vw, 3rem);
+  }
+
+  .kivo-product-strip p:not(.kivo-eyebrow) {
+    max-width: 43rem;
+    color: #64778c;
+    margin-top: 0.55rem;
+  }
+
+  .kivo-reveal {
+    animation: kivo-rise 700ms ease both;
+  }
+
+  .kivo-reveal:nth-child(2) {
+    animation-delay: 100ms;
+  }
+
+  @keyframes kivo-rise {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes kivo-float {
+    0%,
+    100% {
+      transform: translateY(0) rotate(-1deg);
+    }
+    50% {
+      transform: translateY(-16px) rotate(1deg);
+    }
+  }
+
+  @keyframes kivo-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .kivo-hero,
+    .kivo-showcase {
+      grid-template-columns: 1fr;
+    }
+
+    .kivo-hero h1 {
+      max-width: 12ch;
+    }
+
+    .kivo-benefits {
+      grid-template-columns: 1fr;
+    }
+
+    .kivo-product-strip {
+      align-items: stretch;
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .kivo-home {
+      padding-top: 0.5rem;
+    }
+
+    .kivo-hero {
+      min-height: auto;
+      padding-top: 1rem;
+    }
+
+    .kivo-hero h1 {
+      font-size: 3.45rem;
+    }
+
+    .kivo-showcase__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .kivo-floating-card {
+      position: relative;
+      inset: auto;
+      width: 100%;
+      margin-top: 0.75rem;
+    }
+
+    .kivo-hero__visual {
+      min-height: auto;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "KivoRest home",
+  "settings": [],
+  "presets": [
+    {
+      "name": "KivoRest home"
+    }
+  ]
+}
+{% endschema %}
