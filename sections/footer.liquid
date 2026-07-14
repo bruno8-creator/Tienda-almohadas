@@ -9,18 +9,8 @@
 
   <div class="footer__links">
     <a href="{{ routes.root_url }}">Home</a>
-    <a href="/products/air-cushion-pillows-outdoor-camping-folding-square-lnflatable-pillows-travel-backrest-plane-head-rest-pillow-camping?variant=54547796820310">AirRest</a>
+    <a href="{{ routes.all_products_collection_url }}">Products</a>
     <a href="{{ routes.cart_url }}">Cart</a>
-  </div>
-
-  <div class="footer__payment">
-    <p class="footer__payment-title">Secure payments</p>
-    {% render 'kivorest-payment-badges' %}
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
-    {% endif %}
   </div>
 
   <div class="footer__copyright">
@@ -31,7 +21,7 @@
 {% stylesheet %}
   footer {
     display: grid;
-    grid-template-columns: 1.4fr 0.8fr 1fr;
+    grid-template-columns: 1.4fr 0.8fr;
     gap: 2rem;
     align-items: start;
     width: min(1180px, calc(100% - 32px));
@@ -72,8 +62,7 @@
     margin-top: 0.3rem;
   }
 
-  footer .footer__links,
-  footer .footer__payment {
+  footer .footer__links {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
@@ -81,22 +70,6 @@
 
   footer .footer__links {
     flex-direction: column;
-  }
-
-  footer .footer__payment {
-    justify-content: flex-end;
-  }
-
-  footer .footer__payment svg {
-    width: 2.5rem;
-    height: auto;
-  }
-
-  footer .footer__payment-title {
-    width: 100%;
-    color: #102033;
-    font-weight: 900;
-    text-align: right;
   }
 
   footer .footer__copyright {
@@ -110,14 +83,6 @@
       grid-template-columns: 1fr;
       padding: 1.25rem;
     }
-
-    footer .footer__payment {
-      justify-content: flex-start;
-    }
-
-    footer .footer__payment-title {
-      text-align: left;
-    }
   }
 {% endstylesheet %}
 
@@ -129,12 +94,6 @@
       "type": "link_list",
       "id": "menu",
       "label": "t:labels.menu"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_payment_icons",
-      "label": "t:labels.show_payment_icons",
-      "default": true
     }
   ]
 }

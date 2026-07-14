@@ -107,7 +107,6 @@ textarea {
 }
 
 .kivo-button,
-.shopify-payment-button__button,
 input[type="submit"] {
   display: inline-flex;
   min-height: 3.25rem;
@@ -130,7 +129,6 @@ input[type="submit"] {
 }
 
 .kivo-button:hover,
-.shopify-payment-button__button:hover,
 input[type="submit"]:hover {
   box-shadow: 0 22px 55px rgba(43, 145, 255, 0.36);
   filter: saturate(1.08);
@@ -261,22 +259,8 @@ input[type="submit"]:hover {
   padding: 0.75rem 0.9rem;
 }
 
-.product-form input[type="submit"],
-.product-form .shopify-payment-button {
+.product-form input[type="submit"] {
   grid-column: 1 / -1;
-}
-
-.product-form::after {
-  content: "Secure checkout: Visa · Mastercard · Amex · PayPal · Apple Pay · Google Pay · Shop Pay";
-  grid-column: 1 / -1;
-  display: block;
-  border-radius: 18px;
-  background: #f5fbff;
-  color: #315f8f;
-  font-size: 0.9rem;
-  font-weight: 900;
-  margin-top: 0.85rem;
-  padding: 0.9rem 1rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

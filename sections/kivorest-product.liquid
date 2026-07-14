@@ -121,14 +121,7 @@
         <input id="Quantity-{{ section.id }}" type="number" name="quantity" min="1" value="1">
 
         <input type="submit" value="Add to cart">
-        {{ form | payment_button }}
       {% endform %}
-    </div>
-
-    <div class="kivo-product-payment">
-      <strong>Secure payment options</strong>
-      {% render 'kivorest-payment-badges' %}
-      <p>Final payment options are shown at checkout based on your device, region, and Shopify payment settings.</p>
     </div>
 
     <div class="kivo-product-trust">
@@ -439,20 +432,6 @@
     margin-top: 0.4rem;
   }
 
-  .shopify-payment-button {
-    margin-top: 0.2rem;
-  }
-
-  .shopify-payment-button__button {
-    width: 100%;
-    border-radius: 999px !important;
-  }
-
-  .shopify-payment-button__more-options {
-    color: #52657a;
-    margin-top: 0.75rem;
-  }
-
   .kivo-product-trust {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -460,24 +439,6 @@
     margin-top: 1.25rem;
   }
 
-  .kivo-product-payment {
-    margin-top: 1.25rem;
-    border-radius: 22px;
-    background: #f5fbff;
-    padding: 1rem;
-  }
-
-  .kivo-product-payment > strong {
-    display: block;
-    color: #102033;
-    margin-bottom: 0.65rem;
-  }
-
-  .kivo-product-payment p {
-    color: #64778c;
-    font-size: 0.88rem;
-    margin-top: 0.7rem;
-  }
 
   .kivo-product-trust div {
     border-radius: 20px;
