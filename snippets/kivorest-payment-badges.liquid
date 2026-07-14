@@ -1,0 +1,33 @@
+<div class="kivo-payment-badges" aria-label="Supported payment methods">
+  <span>Visa</span>
+  <span>Mastercard</span>
+  <span>Amex</span>
+  <span>PayPal</span>
+  <span>Apple Pay</span>
+  <span>Google Pay</span>
+  <span>Shop Pay</span>
+</div>
+
+{% stylesheet %}
+  .kivo-payment-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .kivo-payment-badges span {
+    display: inline-flex;
+    min-height: 2.15rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(44, 145, 255, 0.16);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.86);
+    color: #315f8f;
+    font-size: 0.78rem;
+    font-weight: 900;
+    line-height: 1;
+    padding: 0.5rem 0.7rem;
+    white-space: nowrap;
+  }
+{% endstylesheet %}

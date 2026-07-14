@@ -266,6 +266,19 @@ input[type="submit"]:hover {
   grid-column: 1 / -1;
 }
 
+.product-form::after {
+  content: "Secure checkout: Visa · Mastercard · Amex · PayPal · Apple Pay · Google Pay · Shop Pay";
+  grid-column: 1 / -1;
+  display: block;
+  border-radius: 18px;
+  background: #f5fbff;
+  color: #315f8f;
+  font-size: 0.9rem;
+  font-weight: 900;
+  margin-top: 0.85rem;
+  padding: 0.9rem 1rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

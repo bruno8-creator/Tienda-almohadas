@@ -14,6 +14,8 @@
   </div>
 
   <div class="footer__payment">
+    <p class="footer__payment-title">Secure payments</p>
+    {% render 'kivorest-payment-badges' %}
     {% if section.settings.show_payment_icons %}
       {% for type in shop.enabled_payment_types %}
         {{ type | payment_type_svg_tag }}
@@ -90,6 +92,13 @@
     height: auto;
   }
 
+  footer .footer__payment-title {
+    width: 100%;
+    color: #102033;
+    font-weight: 900;
+    text-align: right;
+  }
+
   footer .footer__copyright {
     grid-column: 1 / -1;
     color: #8a9bae;
@@ -104,6 +113,10 @@
 
     footer .footer__payment {
       justify-content: flex-start;
+    }
+
+    footer .footer__payment-title {
+      text-align: left;
     }
   }
 {% endstylesheet %}
