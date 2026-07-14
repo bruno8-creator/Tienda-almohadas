@@ -1,33 +1,382 @@
 {% comment %}
-  This section is used in the cart template to render /cart page with an
-  overview of the items in customer's cart.
-
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/cart
+  KivoRest cart page.
 {% endcomment %}
 
-<h1>{{ 'cart.title' | t }}</h1>
+<section class="kivo-cart-page">
+  <div class="kivo-cart-header">
+    <p class="kivo-cart-eyebrow">KivoRest checkout</p>
+    <h1>Your cart</h1>
+    <p>Review your travel comfort essentials before checkout.</p>
+  </div>
 
-<form action="{{ routes.cart_url }}" method="post">
-  <table>
-    {% for item in cart.items %}
-      <tr>
-        <td>
-          {% render 'image', image: item.image, url: item.url %}
-        </td>
-        <td>
-          <p>{{ item.product.title }}</p>
-          {{ 'cart.remove' | t | link_to: item.url_to_remove }}
-        </td>
-        <td>
-          <input type="text" name="updates[]" value="{{ item.quantity }}">
-          <input type="submit" value="{{ 'cart.update' | t }}">
-        </td>
-      </tr>
-    {% endfor %}
-  </table>
+  {% if cart.item_count == 0 %}
+    <div class="kivo-cart-empty">
+      <img src="{{ 'kivorest-logo.png' | asset_url }}" alt="KivoRest" width="180" height="180">
+      <h2>Your cart is empty</h2>
+      <p>Start with the current KivoRest product and choose the color that fits your next trip.</p>
+      <a class="kivo-button" href="{{ routes.all_products_collection_url }}">Shop products</a>
+    </div>
+  {% else %}
+    <form class="kivo-cart-form" action="{{ routes.cart_url }}" method="post">
+      <div class="kivo-cart-layout">
+        <div class="kivo-cart-items" aria-label="Cart items">
+          {% for item in cart.items %}
+            {% liquid
+              assign item_image_alt = item.image.alt | default: item.product.title
+              assign quantity_id = 'Quantity-' | append: forloop.index
+            %}
+            <article class="kivo-cart-item">
+              <a class="kivo-cart-item__image" href="{{ item.url }}" aria-label="View {{ item.product.title | escape }}">
+                {% if item.image %}
+                  {{ item.image | image_url: width: 420 | image_tag: loading: 'lazy', alt: item_image_alt }}
+                {% else %}
+                  <img src="{{ 'kivorest-logo.png' | asset_url }}" alt="KivoRest" width="420" height="420">
+                {% endif %}
+              </a>
 
-  <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
-</form>
+              <div class="kivo-cart-item__content">
+                <div>
+                  <a class="kivo-cart-item__title" href="{{ item.url }}">{{ item.product.title }}</a>
+                  {% unless item.product.has_only_default_variant %}
+                    <p class="kivo-cart-item__variant">{{ item.variant.title }}</p>
+                  {% endunless %}
+                  <p class="kivo-cart-item__price">{{ item.final_price | money }} each</p>
+                </div>
+
+                <div class="kivo-cart-item__controls">
+                  <label for="{{ quantity_id }}">Quantity</label>
+                  <input
+                    id="{{ quantity_id }}"
+                    type="number"
+                    name="updates[]"
+                    value="{{ item.quantity }}"
+                    min="0"
+                    inputmode="numeric"
+                    aria-label="Quantity for {{ item.product.title | escape }}"
+                  >
+                  <a href="{{ item.url_to_remove }}">Remove</a>
+                </div>
+              </div>
+
+              <p class="kivo-cart-item__total">{{ item.final_line_price | money }}</p>
+            </article>
+          {% endfor %}
+        </div>
+
+        <aside class="kivo-cart-summary" aria-label="Order summary">
+          <h2>Order summary</h2>
+          <div class="kivo-cart-summary__row">
+            <span>Items</span>
+            <strong>{{ cart.item_count }}</strong>
+          </div>
+          <div class="kivo-cart-summary__row">
+            <span>Subtotal</span>
+            <strong>{{ cart.total_price | money }}</strong>
+          </div>
+          <p>Shipping and taxes are calculated at checkout.</p>
+          <div class="kivo-cart-summary__actions">
+            <button class="kivo-cart-update" type="submit">Update cart</button>
+            <button class="kivo-cart-checkout" type="submit" name="checkout">Checkout</button>
+          </div>
+          <a class="kivo-cart-continue" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
+        </aside>
+      </div>
+    </form>
+  {% endif %}
+</section>
+
+{% stylesheet %}
+  .kivo-cart-page {
+    width: min(1180px, calc(100% - 32px));
+    margin: 2rem auto 5rem;
+  }
+
+  .kivo-cart-header {
+    max-width: 46rem;
+    animation: kivo-cart-rise 520ms ease both;
+  }
+
+  .kivo-cart-eyebrow {
+    color: #2c91ff;
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .kivo-cart-header h1 {
+    margin-top: 0.5rem;
+    color: #102033;
+    font-size: clamp(2.8rem, 6vw, 5.8rem);
+    letter-spacing: 0;
+    line-height: 0.95;
+  }
+
+  .kivo-cart-header p:last-child {
+    margin-top: 0.75rem;
+    color: #52657a;
+    font-size: 1.08rem;
+  }
+
+  .kivo-cart-empty {
+    display: grid;
+    justify-items: center;
+    gap: 0.8rem;
+    max-width: 38rem;
+    margin: 3rem auto 0;
+    border: 1px solid rgba(44, 145, 255, 0.14);
+    border-radius: 34px;
+    background: rgba(255, 255, 255, 0.84);
+    box-shadow: 0 28px 80px rgba(34, 91, 160, 0.12);
+    padding: clamp(1.4rem, 4vw, 3rem);
+    text-align: center;
+    animation: kivo-cart-rise 580ms ease 80ms both;
+  }
+
+  .kivo-cart-empty img {
+    width: 7rem;
+    border-radius: 26px;
+  }
+
+  .kivo-cart-empty h2 {
+    color: #102033;
+    font-size: clamp(1.9rem, 4vw, 3rem);
+    letter-spacing: 0;
+    line-height: 1;
+  }
+
+  .kivo-cart-empty p {
+    max-width: 28rem;
+    color: #52657a;
+  }
+
+  .kivo-cart-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 0.38fr);
+    gap: clamp(1rem, 3vw, 2rem);
+    align-items: start;
+    margin-top: 2rem;
+  }
+
+  .kivo-cart-items {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .kivo-cart-item {
+    display: grid;
+    grid-template-columns: 8.5rem minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: center;
+    border: 1px solid rgba(44, 145, 255, 0.14);
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow: 0 22px 60px rgba(34, 91, 160, 0.1);
+    padding: 0.85rem;
+    animation: kivo-cart-rise 560ms ease both;
+  }
+
+  .kivo-cart-item__image {
+    overflow: hidden;
+    display: grid;
+    aspect-ratio: 1;
+    place-items: center;
+    border-radius: 22px;
+    background:
+      radial-gradient(circle at 50% 16%, rgba(93, 180, 255, 0.26), transparent 6rem),
+      #f5fbff;
+  }
+
+  .kivo-cart-item__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 180ms ease;
+  }
+
+  .kivo-cart-item__image:hover img {
+    transform: scale(1.04);
+  }
+
+  .kivo-cart-item__content {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .kivo-cart-item__title {
+    color: #102033;
+    font-size: 1.1rem;
+    font-weight: 900;
+    text-decoration: none;
+  }
+
+  .kivo-cart-item__variant,
+  .kivo-cart-item__price {
+    margin-top: 0.25rem;
+    color: #64778c;
+    font-size: 0.95rem;
+  }
+
+  .kivo-cart-item__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    align-items: center;
+  }
+
+  .kivo-cart-item__controls label {
+    color: #102033;
+    font-size: 0.9rem;
+    font-weight: 900;
+  }
+
+  .kivo-cart-item__controls input {
+    width: 5rem;
+    min-height: 2.75rem;
+    border: 1px solid rgba(44, 145, 255, 0.2);
+    border-radius: 16px;
+    background: #ffffff;
+    color: #102033;
+    padding: 0.55rem 0.7rem;
+  }
+
+  .kivo-cart-item__controls a {
+    color: #315f8f;
+    font-weight: 900;
+    text-decoration: none;
+  }
+
+  .kivo-cart-item__total {
+    color: #102033;
+    font-size: 1.12rem;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+
+  .kivo-cart-summary {
+    position: sticky;
+    top: 7.5rem;
+    border: 1px solid rgba(44, 145, 255, 0.14);
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.88);
+    box-shadow: 0 28px 80px rgba(34, 91, 160, 0.12);
+    padding: 1.2rem;
+    animation: kivo-cart-rise 620ms ease 120ms both;
+  }
+
+  .kivo-cart-summary h2 {
+    color: #102033;
+    font-size: 1.35rem;
+    letter-spacing: 0;
+  }
+
+  .kivo-cart-summary__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-top: 1px solid rgba(44, 145, 255, 0.14);
+    margin-top: 1rem;
+    padding-top: 1rem;
+  }
+
+  .kivo-cart-summary__row span,
+  .kivo-cart-summary p {
+    color: #64778c;
+  }
+
+  .kivo-cart-summary__row strong {
+    color: #102033;
+    font-size: 1.05rem;
+  }
+
+  .kivo-cart-summary p {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+  }
+
+  .kivo-cart-summary__actions {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1.2rem;
+  }
+
+  .kivo-cart-update,
+  .kivo-cart-checkout {
+    display: inline-flex;
+    min-height: 3.15rem;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 900;
+    padding: 0.85rem 1.2rem;
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease,
+      filter 180ms ease;
+  }
+
+  .kivo-cart-update {
+    background: #edf7ff;
+    color: #102033;
+  }
+
+  .kivo-cart-checkout {
+    background: linear-gradient(135deg, #2c91ff, #73c0ff);
+    box-shadow: 0 18px 45px rgba(43, 145, 255, 0.28);
+    color: #ffffff;
+  }
+
+  .kivo-cart-update:hover,
+  .kivo-cart-checkout:hover {
+    box-shadow: 0 22px 55px rgba(43, 145, 255, 0.28);
+    filter: saturate(1.08);
+    transform: translateY(-2px);
+  }
+
+  .kivo-cart-continue {
+    display: inline-flex;
+    justify-content: center;
+    margin-top: 1rem;
+    color: #315f8f;
+    font-weight: 900;
+    text-decoration: none;
+  }
+
+  @keyframes kivo-cart-rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .kivo-cart-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .kivo-cart-summary {
+      position: relative;
+      top: auto;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .kivo-cart-item {
+      grid-template-columns: 6.5rem minmax(0, 1fr);
+    }
+
+    .kivo-cart-item__total {
+      grid-column: 2;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

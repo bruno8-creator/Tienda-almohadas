@@ -120,7 +120,10 @@
         <label for="Quantity-{{ section.id }}">Quantity</label>
         <input id="Quantity-{{ section.id }}" type="number" name="quantity" min="1" value="1">
 
-        <input type="submit" value="Add to cart">
+        <button class="kivo-add-to-cart" type="submit" data-kivo-add-to-cart>
+          <span data-kivo-add-label>Add to cart</span>
+        </button>
+        <p class="kivo-cart-feedback" data-kivo-cart-feedback role="status" aria-live="polite"></p>
       {% endform %}
     </div>
 
@@ -427,9 +430,45 @@
     padding: 0.75rem 0.9rem;
   }
 
-  .kivo-product-form input[type="submit"] {
+  .kivo-product-form input[type="submit"],
+  .kivo-product-form .kivo-add-to-cart {
+    display: inline-flex;
     width: 100%;
+    min-height: 3.25rem;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #2c91ff, #73c0ff);
+    box-shadow: 0 18px 45px rgba(43, 145, 255, 0.28);
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 900;
+    letter-spacing: 0;
     margin-top: 0.4rem;
+    padding: 0.9rem 1.5rem;
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease,
+      filter 180ms ease;
+  }
+
+  .kivo-product-form .kivo-add-to-cart:hover {
+    box-shadow: 0 22px 55px rgba(43, 145, 255, 0.36);
+    filter: saturate(1.08);
+    transform: translateY(-2px);
+  }
+
+  .kivo-product-form .kivo-add-to-cart[disabled] {
+    cursor: wait;
+    opacity: 0.72;
+  }
+
+  .kivo-cart-feedback {
+    min-height: 1.4rem;
+    color: #315f8f;
+    font-size: 0.92rem;
+    font-weight: 800;
   }
 
   .kivo-product-trust {
@@ -559,6 +598,57 @@
       }
 
       updateImage(variantButton);
+    }
+  });
+
+  document.addEventListener('submit', async (event) => {
+    const form = event.target.closest('.kivo-product-form form');
+    if (!form) return;
+
+    event.preventDefault();
+
+    const button = form.querySelector('[data-kivo-add-to-cart]');
+    const label = form.querySelector('[data-kivo-add-label]');
+    const feedback = form.querySelector('[data-kivo-cart-feedback]');
+    const originalLabel = label?.textContent || 'Add to cart';
+
+    if (button) button.disabled = true;
+    if (label) label.textContent = 'Adding...';
+    if (feedback) feedback.textContent = '';
+
+    try {
+      const response = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: new FormData(form),
+      });
+
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({}));
+        throw new Error(error.description || 'Unable to add this item to cart.');
+      }
+
+      const cart = await fetch('/cart.js', {
+        headers: { Accept: 'application/json' },
+      }).then((cartResponse) => cartResponse.json());
+
+      document.querySelectorAll('[data-cart-count]').forEach((counter) => {
+        counter.textContent = cart.item_count;
+        counter.hidden = cart.item_count === 0;
+      });
+
+      if (feedback) feedback.textContent = 'Added to cart.';
+      if (label) label.textContent = 'Added';
+
+      window.setTimeout(() => {
+        window.location.href = '/cart';
+      }, 550);
+    } catch (error) {
+      if (feedback) feedback.textContent = error.message;
+      if (label) label.textContent = originalLabel;
+      if (button) button.disabled = false;
     }
   });
 {% endjavascript %}
