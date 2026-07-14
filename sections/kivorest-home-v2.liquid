@@ -6,189 +6,196 @@
   endif
 %}
 
-<section class="kivo-home full-width">
-  <div class="kivo-announcement kivo-reveal">
+<section class="kivo-storefront full-width">
+  <div class="kivo-storebar">
     <span>Secure Shopify checkout</span>
-    <span>Fast product discovery</span>
     <span>Travel comfort essentials</span>
+    <span>More products coming soon</span>
   </div>
 
-  <div class="kivo-hero">
-    <div class="kivo-hero__copy kivo-reveal">
-      <p class="kivo-eyebrow">KivoRest comfort essentials</p>
-      <h1>Rest that travels with you.</h1>
-      <p class="kivo-lede">
-        Smart, compact comfort products designed for travel days, outdoor plans, long commutes, and better pauses wherever
-        life takes you.
+  <div class="kivo-shop-hero">
+    <div>
+      <p class="kivo-eyebrow">KivoRest store</p>
+      <h1>Portable comfort essentials.</h1>
+      <p>
+        Shop compact rest products for travel, outdoor plans, commutes, and everyday breaks. The catalog is starting
+        small and built to grow product by product.
       </p>
-      <div class="kivo-actions">
-        <a class="kivo-button" href="#kivo-products">Shop products</a>
-        <a class="kivo-button kivo-button--ghost" href="#kivo-benefits">Why KivoRest</a>
-      </div>
-      <div class="kivo-proof" aria-label="KivoRest highlights">
-        <span>Travel-ready</span>
-        <span>Lightweight comfort</span>
-        <span>Everyday recovery</span>
-      </div>
     </div>
-
-    <div class="kivo-hero__visual kivo-reveal" aria-hidden="true">
-      <div class="kivo-orbit"></div>
-      <div class="kivo-brand-mark">
-        <img src="{{ 'kivorest-logo.png' | asset_url }}" alt="" width="720" height="720">
-      </div>
-      <div class="kivo-floating-card kivo-floating-card--top">
-        <strong>Compact by design</strong>
-        <span>Built for bags, cabins, cars, and outdoor setups.</span>
-      </div>
-      <div class="kivo-floating-card kivo-floating-card--bottom">
-        <strong>Comfort first</strong>
-        <span>Products chosen for practical support and easy routines.</span>
-      </div>
+    <div class="kivo-shop-hero__aside">
+      <img src="{{ 'kivorest-logo.png' | asset_url }}" alt="KivoRest" width="180" height="180">
+      <strong>Clean. Compact. Ready to go.</strong>
     </div>
   </div>
 
-  <div id="kivo-benefits" class="kivo-benefits">
-    <article class="kivo-benefit kivo-reveal">
-      <span>01</span>
-      <h2>Made for movement</h2>
-      <p>Comfort products that are easy to pack, carry, use, and store.</p>
-    </article>
-    <article class="kivo-benefit kivo-reveal">
-      <span>02</span>
-      <h2>Simple to choose</h2>
-      <p>Clear product pages, useful details, and no overcomplicated buying flow.</p>
-    </article>
-    <article class="kivo-benefit kivo-reveal">
-      <span>03</span>
-      <h2>Designed to feel light</h2>
-      <p>A clean store experience with soft visuals, calm motion, and focused product discovery.</p>
-    </article>
+  <div class="kivo-category-row" aria-label="Product categories">
+    <a href="#kivo-products">All products</a>
+    <a href="#kivo-products">Travel pillows</a>
+    <a href="#kivo-products">Outdoor comfort</a>
+    <a href="#kivo-products">Coming soon</a>
   </div>
 
-  <div class="kivo-trust-panel kivo-reveal">
-    <div>
-      <p class="kivo-eyebrow">Store confidence</p>
-      <h2>Built for a smooth, trustworthy shopping experience.</h2>
-    </div>
-    <div class="kivo-trust-panel__items">
-      <div><strong>Secure checkout</strong><span>Payments are processed through Shopify checkout.</span></div>
-      <div><strong>Clear product pages</strong><span>Photos, variants, pricing, and product details stay easy to scan.</span></div>
-      <div><strong>Mobile-first flow</strong><span>Designed for fast browsing and buying from a phone.</span></div>
-    </div>
-  </div>
-
-  <div class="kivo-showcase kivo-reveal">
-    <div>
-      <p class="kivo-eyebrow">Built around better breaks</p>
-      <h2>Portable comfort for trips, workdays, and outdoor moments.</h2>
-    </div>
-    <div class="kivo-showcase__grid">
-      <div><strong>Travel</strong><span>Comfort support for planes, cars, trains, and luggage-light trips.</span></div>
-      <div><strong>Outdoor</strong><span>Useful for camping, beach days, picnics, and short rests.</span></div>
-      <div><strong>Daily</strong><span>Small upgrades for commutes, naps, and quiet reset moments.</span></div>
-      <div><strong>Giftable</strong><span>Practical products with a friendly, modern brand feel.</span></div>
-    </div>
-  </div>
-
-  <div id="kivo-products" class="kivo-products kivo-reveal">
-    <div class="kivo-products__header">
-      <p class="kivo-eyebrow">Products</p>
-      <h2>Shop KivoRest</h2>
-      <p>More comfort essentials are coming soon. Start with our first travel-ready product.</p>
+  <div id="kivo-products" class="kivo-catalog">
+    <div class="kivo-catalog__header">
+      <div>
+        <p class="kivo-eyebrow">Products</p>
+        <h2>Shop all</h2>
+      </div>
+      <p>{{ collections.all.products_count | default: 1 }} item available</p>
     </div>
 
-    <div class="kivo-products__grid">
-      <a class="kivo-product-card" href="{{ product_url }}">
-        <div class="kivo-product-card__media">
-          {% if featured_product.featured_image %}
+    <div class="kivo-product-grid">
+      {% if featured_product != blank %}
+        <a class="kivo-product-tile" href="{{ product_url }}">
+          <div class="kivo-product-tile__image">
             {{ featured_product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy' }}
-          {% else %}
-            <img src="{{ 'kivorest-logo.png' | asset_url }}" alt="KivoRest" width="720" height="720">
-          {% endif %}
-        </div>
-        <div class="kivo-product-card__content">
-          <span>Available now</span>
-          <h3>{{ featured_product.title | default: 'Inflatable Travel Pillow' }}</h3>
-          <p>Inflatable, compact support for travel, camping, and quick rest stops.</p>
-          <strong>{{ featured_product.price | default: 295 | money }}</strong>
-        </div>
-      </a>
+          </div>
+          <div class="kivo-product-tile__body">
+            <span class="kivo-product-tile__badge">In stock</span>
+            <h3>{{ featured_product.title }}</h3>
+            <p>Inflatable support for flights, road trips, camping, and quick rest stops.</p>
+            <div class="kivo-product-tile__footer">
+              <strong>{{ featured_product.price | money }}</strong>
+              <span>View product</span>
+            </div>
+          </div>
+        </a>
+      {% endif %}
 
-      <div class="kivo-product-card kivo-product-card--soon" aria-label="More KivoRest products coming soon">
-        <div class="kivo-product-card__media">
-          <img src="{{ 'kivorest-logo.png' | asset_url }}" alt="" width="720" height="720">
+      <div class="kivo-product-tile kivo-product-tile--placeholder">
+        <div class="kivo-product-tile__image">
+          <img src="{{ 'kivorest-logo.png' | asset_url }}" alt="" width="420" height="420">
         </div>
-        <div class="kivo-product-card__content">
-          <span>Coming soon</span>
-          <h3>More comfort essentials</h3>
-          <p>New portable rest products will be added here as the KivoRest collection grows.</p>
-          <strong>Stay tuned</strong>
+        <div class="kivo-product-tile__body">
+          <span class="kivo-product-tile__badge">Coming soon</span>
+          <h3>Compact neck support</h3>
+          <p>A future KivoRest product slot for the next travel comfort item.</p>
+          <div class="kivo-product-tile__footer">
+            <strong>Coming soon</strong>
+            <span>Preview</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="kivo-product-tile kivo-product-tile--placeholder">
+        <div class="kivo-product-tile__image">
+          <img src="{{ 'kivorest-logo.png' | asset_url }}" alt="" width="420" height="420">
+        </div>
+        <div class="kivo-product-tile__body">
+          <span class="kivo-product-tile__badge">Coming soon</span>
+          <h3>Outdoor rest kit</h3>
+          <p>A future slot for camping, beach, and outdoor comfort essentials.</p>
+          <div class="kivo-product-tile__footer">
+            <strong>Coming soon</strong>
+            <span>Preview</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="kivo-product-tile kivo-product-tile--placeholder">
+        <div class="kivo-product-tile__image">
+          <img src="{{ 'kivorest-logo.png' | asset_url }}" alt="" width="420" height="420">
+        </div>
+        <div class="kivo-product-tile__body">
+          <span class="kivo-product-tile__badge">Coming soon</span>
+          <h3>Everyday comfort</h3>
+          <p>A future slot for small comfort upgrades for daily routines.</p>
+          <div class="kivo-product-tile__footer">
+            <strong>Coming soon</strong>
+            <span>Preview</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="kivo-payment-section kivo-reveal">
+  <div class="kivo-store-info">
+    <article>
+      <strong>Secure checkout</strong>
+      <p>Payments are handled by Shopify checkout with familiar payment options.</p>
+    </article>
+    <article>
+      <strong>Product-first layout</strong>
+      <p>The store is organized around a scalable grid so new products can be added naturally.</p>
+    </article>
+    <article>
+      <strong>Mobile friendly</strong>
+      <p>Product cards, photos, and checkout actions are designed for quick browsing on phones.</p>
+    </article>
+  </div>
+
+  <div class="kivo-payment-strip">
     <div>
-      <p class="kivo-eyebrow">Checkout</p>
-      <h2>Pay securely with familiar methods.</h2>
-      <p>Payment availability is finalized by Shopify at checkout based on your store settings, region, and customer device.</p>
+      <p class="kivo-eyebrow">Payments</p>
+      <h2>Familiar payment methods at checkout.</h2>
     </div>
     {% render 'kivorest-payment-badges' %}
   </div>
 </section>
 
 {% stylesheet %}
-  .kivo-home {
-    overflow: hidden;
-    padding: 2rem 0 5rem;
+  .kivo-storefront {
+    padding: 1rem 0 5rem;
   }
 
-  .kivo-home h1,
-  .kivo-home h2,
-  .kivo-home h3 {
+  .kivo-storefront h1,
+  .kivo-storefront h2,
+  .kivo-storefront h3 {
     color: #102033;
     letter-spacing: 0;
-    line-height: 0.98;
+    line-height: 1;
   }
 
-  .kivo-hero,
-  .kivo-announcement,
-  .kivo-benefits,
-  .kivo-showcase,
-  .kivo-products,
-  .kivo-trust-panel,
-  .kivo-payment-section {
+  .kivo-storebar,
+  .kivo-shop-hero,
+  .kivo-category-row,
+  .kivo-catalog,
+  .kivo-store-info,
+  .kivo-payment-strip {
     width: min(1180px, calc(100% - 32px));
     margin-inline: auto;
   }
 
-  .kivo-announcement {
+  .kivo-storebar {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.65rem;
-    justify-content: center;
-    padding: 0.7rem 0 0;
+    gap: 0.55rem;
+    padding-top: 0.5rem;
   }
 
-  .kivo-announcement span {
-    border: 1px solid rgba(44, 145, 255, 0.14);
+  .kivo-storebar span,
+  .kivo-category-row a,
+  .kivo-product-tile__badge {
+    border: 1px solid rgba(44, 145, 255, 0.16);
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.72);
-    color: #52657a;
-    font-size: 0.78rem;
+    background: rgba(255, 255, 255, 0.78);
+    color: #315f8f;
+    font-size: 0.8rem;
     font-weight: 900;
-    padding: 0.45rem 0.7rem;
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
   }
 
-  .kivo-hero {
+  .kivo-shop-hero {
     display: grid;
-    grid-template-columns: minmax(0, 0.98fr) minmax(320px, 1.02fr);
-    gap: clamp(2rem, 5vw, 5rem);
-    align-items: center;
-    min-height: calc(100svh - 7.5rem);
-    padding: clamp(2rem, 5vw, 5rem) 0;
+    grid-template-columns: minmax(0, 1.3fr) minmax(18rem, 0.7fr);
+    gap: 1rem;
+    align-items: stretch;
+    margin-top: 1rem;
+  }
+
+  .kivo-shop-hero > div,
+  .kivo-catalog,
+  .kivo-store-info article,
+  .kivo-payment-strip {
+    border: 1px solid rgba(44, 145, 255, 0.13);
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 24px 70px rgba(34, 91, 160, 0.1);
+  }
+
+  .kivo-shop-hero > div:first-child {
+    padding: clamp(1.4rem, 4vw, 3rem);
   }
 
   .kivo-eyebrow {
@@ -199,281 +206,88 @@
     text-transform: uppercase;
   }
 
-  .kivo-hero h1 {
-    max-width: 10ch;
+  .kivo-shop-hero h1 {
+    max-width: 11ch;
+    margin-top: 0.75rem;
+    font-size: clamp(3rem, 6vw, 6.5rem);
+  }
+
+  .kivo-shop-hero p:not(.kivo-eyebrow) {
+    max-width: 46rem;
     margin-top: 1rem;
-    font-size: clamp(3.6rem, 8vw, 8rem);
-  }
-
-  .kivo-lede {
-    max-width: 42rem;
-    margin-top: 1.4rem;
     color: #52657a;
-    font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+    font-size: 1.08rem;
   }
 
-  .kivo-actions,
-  .kivo-proof {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.9rem;
-    margin-top: 2rem;
-  }
-
-  .kivo-proof {
-    gap: 0.7rem;
-    margin-top: 1.4rem;
-  }
-
-  .kivo-proof span {
-    border: 1px solid rgba(44, 145, 255, 0.18);
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.72);
-    color: #52657a;
-    font-weight: 800;
-    padding: 0.55rem 0.8rem;
-  }
-
-  .kivo-hero__visual {
-    position: relative;
-    min-height: clamp(25rem, 52vw, 42rem);
+  .kivo-shop-hero__aside {
     display: grid;
-    place-items: center;
-  }
-
-  .kivo-orbit {
-    position: absolute;
-    width: min(92%, 36rem);
-    aspect-ratio: 1;
-    border: 1px solid rgba(44, 145, 255, 0.22);
-    border-radius: 999px;
-    animation: kivo-spin 18s linear infinite;
-  }
-
-  .kivo-orbit::before,
-  .kivo-orbit::after {
-    content: "";
-    position: absolute;
-    width: 0.75rem;
-    aspect-ratio: 1;
-    border-radius: 999px;
-    background: #2c91ff;
-    box-shadow: 0 0 24px rgba(44, 145, 255, 0.7);
-  }
-
-  .kivo-orbit::before {
-    top: 7%;
-    left: 18%;
-  }
-
-  .kivo-orbit::after {
-    right: 8%;
-    bottom: 20%;
-  }
-
-  .kivo-brand-mark {
-    position: relative;
-    z-index: 2;
-    display: grid;
-    width: min(82%, 30rem);
-    aspect-ratio: 1;
-    place-items: center;
-    border: 1px solid rgba(44, 145, 255, 0.16);
-    border-radius: 48px;
-    background:
-      radial-gradient(circle at 50% 25%, rgba(115, 192, 255, 0.26), transparent 14rem),
-      rgba(255, 255, 255, 0.72);
-    box-shadow: 0 36px 80px rgba(35, 107, 184, 0.16);
-    animation: kivo-float 5.4s ease-in-out infinite;
-  }
-
-  .kivo-brand-mark img {
-    width: 72%;
-    border-radius: 34px;
-  }
-
-  .kivo-floating-card {
-    position: absolute;
-    z-index: 3;
-    width: min(15rem, 45vw);
-    border: 1px solid rgba(44, 145, 255, 0.18);
-    border-radius: 24px;
-    background: rgba(255, 255, 255, 0.82);
-    box-shadow: 0 22px 60px rgba(34, 91, 160, 0.14);
-    backdrop-filter: blur(16px);
-    padding: 1rem;
-  }
-
-  .kivo-floating-card strong,
-  .kivo-floating-card span {
-    display: block;
-  }
-
-  .kivo-floating-card strong {
-    color: #102033;
-  }
-
-  .kivo-floating-card span {
-    color: #64778c;
-    font-size: 0.9rem;
-    margin-top: 0.25rem;
-  }
-
-  .kivo-floating-card--top {
-    top: 8%;
-    right: 0;
-  }
-
-  .kivo-floating-card--bottom {
-    bottom: 8%;
-    left: 0;
-  }
-
-  .kivo-benefits,
-  .kivo-products__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    align-content: center;
+    justify-items: center;
     gap: 1rem;
-    margin-top: 2rem;
+    padding: 1.5rem;
+    text-align: center;
   }
 
-  .kivo-benefit,
-  .kivo-showcase,
-  .kivo-products,
-  .kivo-trust-panel,
-  .kivo-payment-section,
-  .kivo-product-card {
-    border: 1px solid rgba(44, 145, 255, 0.13);
-    border-radius: 32px;
-    background: rgba(255, 255, 255, 0.78);
-    box-shadow: 0 24px 70px rgba(34, 91, 160, 0.1);
+  .kivo-shop-hero__aside img {
+    width: min(70%, 13rem);
+    border-radius: 30px;
   }
 
-  .kivo-benefit {
-    padding: 1.35rem;
-    transition:
-      transform 180ms ease,
-      box-shadow 180ms ease;
+  .kivo-shop-hero__aside strong {
+    max-width: 15rem;
+    color: #102033;
+    font-size: 1.4rem;
+    line-height: 1.1;
   }
 
-  .kivo-benefit:hover,
-  .kivo-product-card:hover {
-    box-shadow: 0 28px 80px rgba(34, 91, 160, 0.16);
-    transform: translateY(-5px);
+  .kivo-category-row {
+    display: flex;
+    gap: 0.55rem;
+    overflow-x: auto;
+    padding: 1rem 0 0.2rem;
   }
 
-  .kivo-benefit span {
-    color: #2c91ff;
-    font-weight: 900;
+  .kivo-category-row a {
+    flex: 0 0 auto;
   }
 
-  .kivo-benefit h2 {
-    margin-top: 1.6rem;
-    font-size: 1.55rem;
-  }
-
-  .kivo-benefit p,
-  .kivo-products__header p {
-    margin-top: 0.8rem;
-    color: #64778c;
-  }
-
-  .kivo-showcase,
-  .kivo-products,
-  .kivo-trust-panel,
-  .kivo-payment-section {
+  .kivo-catalog {
     margin-top: 1rem;
-    padding: clamp(1.25rem, 4vw, 3rem);
+    padding: clamp(1rem, 3vw, 1.5rem);
   }
 
-  .kivo-showcase {
-    display: grid;
-    grid-template-columns: 0.85fr 1.15fr;
-    gap: 2rem;
-    align-items: center;
+  .kivo-catalog__header {
+    display: flex;
+    gap: 1rem;
+    align-items: end;
+    justify-content: space-between;
+    padding: 0.25rem 0.25rem 1.2rem;
   }
 
-  .kivo-showcase h2,
-  .kivo-products__header h2,
-  .kivo-trust-panel h2,
-  .kivo-payment-section h2 {
-    margin-top: 0.8rem;
-    font-size: clamp(2.2rem, 4vw, 4.8rem);
-  }
-
-  .kivo-trust-panel,
-  .kivo-payment-section {
-    display: grid;
-    grid-template-columns: 0.85fr 1.15fr;
-    gap: 2rem;
-    align-items: center;
-  }
-
-  .kivo-trust-panel__items {
-    display: grid;
-    gap: 0.8rem;
-  }
-
-  .kivo-trust-panel__items div {
-    border-radius: 22px;
-    background: linear-gradient(145deg, #edf7ff, #ffffff);
-    padding: 1rem;
-  }
-
-  .kivo-trust-panel__items strong,
-  .kivo-trust-panel__items span {
-    display: block;
-  }
-
-  .kivo-trust-panel__items strong {
-    color: #102033;
-    font-size: 1.1rem;
-  }
-
-  .kivo-trust-panel__items span,
-  .kivo-payment-section p {
-    color: #64778c;
+  .kivo-catalog__header h2 {
     margin-top: 0.35rem;
+    font-size: clamp(2rem, 4vw, 4rem);
   }
 
-  .kivo-payment-section .kivo-payment-badges {
-    justify-content: flex-end;
-  }
-
-  .kivo-showcase__grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.8rem;
-  }
-
-  .kivo-showcase__grid div {
-    min-height: 9rem;
-    border-radius: 24px;
-    background: linear-gradient(145deg, #edf7ff, #ffffff);
-    padding: 1rem;
-  }
-
-  .kivo-showcase__grid strong,
-  .kivo-showcase__grid span {
-    display: block;
-  }
-
-  .kivo-showcase__grid strong {
-    color: #102033;
-    font-size: 1.35rem;
-  }
-
-  .kivo-showcase__grid span {
+  .kivo-catalog__header > p {
     color: #64778c;
-    margin-top: 0.45rem;
+    font-weight: 800;
   }
 
-  .kivo-products__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .kivo-product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
   }
 
-  .kivo-product-card {
+  .kivo-product-tile {
     overflow: hidden;
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    border: 1px solid rgba(44, 145, 255, 0.13);
+    border-radius: 22px;
+    background: #ffffff;
     color: inherit;
     text-decoration: none;
     transition:
@@ -481,157 +295,166 @@
       box-shadow 180ms ease;
   }
 
-  .kivo-product-card__media {
+  .kivo-product-tile:hover {
+    box-shadow: 0 22px 55px rgba(34, 91, 160, 0.15);
+    transform: translateY(-4px);
+  }
+
+  .kivo-product-tile__image {
     display: grid;
-    min-height: 24rem;
+    aspect-ratio: 1;
     place-items: center;
     background:
-      radial-gradient(circle at 50% 8%, rgba(115, 192, 255, 0.28), transparent 14rem),
+      radial-gradient(circle at 50% 12%, rgba(115, 192, 255, 0.28), transparent 12rem),
       #f7fbff;
   }
 
-  .kivo-product-card__media img {
+  .kivo-product-tile__image img {
     width: 100%;
-    max-height: 24rem;
+    height: 100%;
     object-fit: contain;
-    padding: 1.2rem;
+    padding: 0.8rem;
     transition: transform 220ms ease;
   }
 
-  .kivo-product-card:hover .kivo-product-card__media img {
+  .kivo-product-tile:hover .kivo-product-tile__image img {
     transform: scale(1.035);
   }
 
-  .kivo-product-card--soon .kivo-product-card__media img {
-    width: min(60%, 18rem);
-    border-radius: 28px;
-    opacity: 0.7;
+  .kivo-product-tile--placeholder {
+    opacity: 0.78;
   }
 
-  .kivo-product-card__content {
-    padding: 1.25rem;
+  .kivo-product-tile--placeholder .kivo-product-tile__image img {
+    width: 58%;
+    height: auto;
+    border-radius: 24px;
   }
 
-  .kivo-product-card__content span {
-    color: #2c91ff;
-    font-size: 0.78rem;
-    font-weight: 900;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+  .kivo-product-tile__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 1rem;
   }
 
-  .kivo-product-card__content h3 {
-    margin-top: 0.55rem;
-    font-size: clamp(1.7rem, 3vw, 2.7rem);
+  .kivo-product-tile__badge {
+    align-self: flex-start;
+    padding: 0.42rem 0.6rem;
   }
 
-  .kivo-product-card__content p {
+  .kivo-product-tile h3 {
+    margin-top: 0.75rem;
+    font-size: 1.25rem;
+    line-height: 1.1;
+  }
+
+  .kivo-product-tile p {
     color: #64778c;
-    margin-top: 0.65rem;
+    font-size: 0.92rem;
+    margin-top: 0.55rem;
   }
 
-  .kivo-product-card__content strong {
-    display: block;
+  .kivo-product-tile__footer {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 1rem;
+  }
+
+  .kivo-product-tile__footer strong {
     color: #102033;
-    font-size: 1.35rem;
+    font-size: 1.1rem;
+  }
+
+  .kivo-product-tile__footer span {
+    color: #2c91ff;
+    font-size: 0.88rem;
+    font-weight: 900;
+  }
+
+  .kivo-store-info {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
     margin-top: 1rem;
   }
 
-  .kivo-reveal {
-    animation: kivo-rise 700ms ease both;
+  .kivo-store-info article {
+    padding: 1rem;
   }
 
-  .kivo-reveal:nth-child(2) {
-    animation-delay: 100ms;
+  .kivo-store-info strong {
+    display: block;
+    color: #102033;
+    font-size: 1.1rem;
   }
 
-  @keyframes kivo-rise {
-    from {
-      opacity: 0;
-      transform: translateY(24px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .kivo-store-info p {
+    color: #64778c;
+    margin-top: 0.45rem;
   }
 
-  @keyframes kivo-float {
-    0%,
-    100% {
-      transform: translateY(0) rotate(-1deg);
-    }
-    50% {
-      transform: translateY(-16px) rotate(1deg);
-    }
+  .kivo-payment-strip {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+    padding: 1.25rem;
   }
 
-  @keyframes kivo-spin {
-    to {
-      transform: rotate(360deg);
-    }
+  .kivo-payment-strip h2 {
+    margin-top: 0.4rem;
+    font-size: clamp(1.6rem, 3vw, 3rem);
   }
 
-  @media (max-width: 900px) {
-    .kivo-hero,
-    .kivo-showcase,
-    .kivo-trust-panel,
-    .kivo-payment-section {
+  .kivo-payment-strip .kivo-payment-badges {
+    justify-content: flex-end;
+  }
+
+  @media (max-width: 980px) {
+    .kivo-product-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .kivo-shop-hero,
+    .kivo-payment-strip {
       grid-template-columns: 1fr;
     }
 
-    .kivo-hero h1 {
-      max-width: 12ch;
-    }
-
-    .kivo-benefits,
-    .kivo-products__grid {
-      grid-template-columns: 1fr;
-    }
-
-    .kivo-payment-section .kivo-payment-badges {
+    .kivo-payment-strip .kivo-payment-badges {
       justify-content: flex-start;
     }
   }
 
-  @media (max-width: 560px) {
-    .kivo-home {
-      padding-top: 0.5rem;
+  @media (max-width: 680px) {
+    .kivo-shop-hero h1 {
+      font-size: 3.25rem;
     }
 
-    .kivo-hero {
-      min-height: auto;
-      padding-top: 1rem;
+    .kivo-catalog__header,
+    .kivo-product-tile__footer {
+      align-items: flex-start;
+      flex-direction: column;
     }
 
-    .kivo-hero h1 {
-      font-size: 3.45rem;
-    }
-
-    .kivo-showcase__grid {
+    .kivo-product-grid,
+    .kivo-store-info {
       grid-template-columns: 1fr;
-    }
-
-    .kivo-floating-card {
-      position: relative;
-      inset: auto;
-      width: 100%;
-      margin-top: 0.75rem;
-    }
-
-    .kivo-hero__visual {
-      min-height: auto;
     }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "KivoRest home v2",
+  "name": "KivoRest storefront grid",
   "settings": [],
   "presets": [
     {
-      "name": "KivoRest home v2"
+      "name": "KivoRest storefront grid"
     }
   ]
 }
