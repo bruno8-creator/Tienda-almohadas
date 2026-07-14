@@ -13,8 +13,8 @@
       <div class="kivo-product-gallery__main">
         {% render 'image', class: 'kivo-product-image-main', image: product.featured_image, width: 1200 %}
       </div>
-      <div class="kivo-product-gallery__thumbs" aria-label="Imágenes del producto">
-        {% for image in product.images limit: 6 %}
+      <div class="kivo-product-gallery__thumbs" aria-label="Product images">
+        {% for image in product.images %}
           {% render 'image', class: 'kivo-product-thumb', image: image, width: 360 %}
         {% endfor %}
       </div>
@@ -135,8 +135,11 @@
 
   .kivo-product-gallery__thumbs {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(5.75rem, 1fr));
     gap: 0.65rem;
+    max-height: 25rem;
+    overflow: auto;
+    padding-right: 0.2rem;
     margin-top: 0.75rem;
   }
 
@@ -343,6 +346,11 @@
     .kivo-product-gallery__thumbs,
     .kivo-product-trust {
       grid-template-columns: repeat(2, 1fr);
+    }
+
+    .kivo-product-gallery__thumbs {
+      max-height: none;
+      overflow: visible;
     }
   }
 {% endstylesheet %}
