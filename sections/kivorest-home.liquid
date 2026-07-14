@@ -1,8 +1,8 @@
 {% liquid
   assign featured_product = all_products['air-cushion-pillows-outdoor-camping-folding-square-lnflatable-pillows-travel-backrest-plane-head-rest-pillow-camping']
-  assign product_url = '/products/air-cushion-pillows-outdoor-camping-folding-square-lnflatable-pillows-travel-backrest-plane-head-rest-pillow-camping'
+  assign product_url = '/products/air-cushion-pillows-outdoor-camping-folding-square-lnflatable-pillows-travel-backrest-plane-head-rest-pillow-camping?variant=54547796820310'
   if featured_product != blank
-    assign product_url = featured_product.url
+    assign product_url = featured_product.selected_or_first_available_variant.url
   endif
 %}
 
