@@ -146,10 +146,10 @@
       </div>
     </div>
 
-    <div class="kivo-product-reviews" aria-label="Customer reviews">
+    <div class="kivo-product-reviews" aria-label="Product review highlights">
       <div class="kivo-product-reviews__header">
         <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-        <strong>Customer reviews</strong>
+        <strong>Product reviews</strong>
       </div>
       <article>
         <p>"Comfortable for long trips and easy to store in my bag. The color selection was clear before adding it to cart."</p>
@@ -160,6 +160,55 @@
         <strong>Marc S.</strong>
       </article>
     </div>
+  </div>
+</section>
+
+<section class="kivo-product-review-section" aria-label="Inflatable Travel Pillow product reviews">
+  <div class="kivo-product-review-summary">
+    <p class="kivo-product-eyebrow">Product reviews</p>
+    <h2>Inflatable Travel Pillow reviews</h2>
+    <div class="kivo-product-review-score">
+      <strong>4.8</strong>
+      <div>
+        <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <p>Based on early product feedback</p>
+      </div>
+    </div>
+    <div class="kivo-product-review-bars" aria-label="Review rating distribution">
+      <div><span>5 stars</span><i style="--bar: 86%"></i><strong>86%</strong></div>
+      <div><span>4 stars</span><i style="--bar: 12%"></i><strong>12%</strong></div>
+      <div><span>3 stars</span><i style="--bar: 2%"></i><strong>2%</strong></div>
+    </div>
+  </div>
+
+  <div class="kivo-product-review-list">
+    <article>
+      <div class="kivo-product-review-card__top">
+        <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <strong>1pc-red</strong>
+      </div>
+      <h3>Great for flights</h3>
+      <p>"I used it on a long flight and liked how small it became after deflating. The red color matched the photos."</p>
+      <footer>Laura M. - Travel use</footer>
+    </article>
+    <article>
+      <div class="kivo-product-review-card__top">
+        <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <strong>Light blue</strong>
+      </div>
+      <h3>Easy to pack</h3>
+      <p>"It fits in my backpack and is simple to inflate. I checked the cart before checkout and everything was clear."</p>
+      <footer>Daniel K. - Weekend trips</footer>
+    </article>
+    <article>
+      <div class="kivo-product-review-card__top">
+        <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <strong>Camping</strong>
+      </div>
+      <h3>Useful outdoors</h3>
+      <p>"Bought it for camping and car rides. The gallery helped me see the shape and color before choosing."</p>
+      <footer>Marta R. - Outdoor comfort</footer>
+    </article>
   </div>
 </section>
 
@@ -576,6 +625,136 @@
     font-size: 0.92rem;
   }
 
+  .kivo-product-review-section {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.42fr) minmax(0, 1fr);
+    gap: clamp(1rem, 3vw, 2rem);
+    width: min(1180px, calc(100% - 32px));
+    margin: -3rem auto 5rem;
+  }
+
+  .kivo-product-review-summary,
+  .kivo-product-review-list article {
+    border: 1px solid rgba(44, 145, 255, 0.14);
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow: 0 24px 70px rgba(34, 91, 160, 0.1);
+    padding: clamp(1rem, 3vw, 1.4rem);
+  }
+
+  .kivo-product-review-summary h2 {
+    margin-top: 0.5rem;
+    color: #102033;
+    font-size: clamp(2rem, 4vw, 4rem);
+    letter-spacing: 0;
+    line-height: 1;
+  }
+
+  .kivo-product-review-score {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1.25rem;
+  }
+
+  .kivo-product-review-score > strong {
+    color: #102033;
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .kivo-product-review-score span,
+  .kivo-product-review-card__top span {
+    color: #2c91ff;
+    letter-spacing: 0.08em;
+  }
+
+  .kivo-product-review-score p {
+    color: #64778c;
+    font-size: 0.92rem;
+    margin-top: 0.2rem;
+  }
+
+  .kivo-product-review-bars {
+    display: grid;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
+  }
+
+  .kivo-product-review-bars div {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr 3rem;
+    gap: 0.6rem;
+    align-items: center;
+    color: #52657a;
+    font-size: 0.88rem;
+    font-weight: 800;
+  }
+
+  .kivo-product-review-bars i {
+    overflow: hidden;
+    height: 0.55rem;
+    border-radius: 999px;
+    background: #edf7ff;
+  }
+
+  .kivo-product-review-bars i::before {
+    content: "";
+    display: block;
+    width: var(--bar);
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(135deg, #2c91ff, #65d6ff, #ff6eb4);
+  }
+
+  .kivo-product-review-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .kivo-product-review-list article {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+  }
+
+  .kivo-product-review-card__top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .kivo-product-review-card__top strong {
+    border-radius: 999px;
+    background: #edf7ff;
+    color: #315f8f;
+    font-size: 0.78rem;
+    padding: 0.38rem 0.55rem;
+  }
+
+  .kivo-product-review-list h3 {
+    margin-top: 0.9rem;
+    color: #102033;
+    font-size: 1.2rem;
+    letter-spacing: 0;
+  }
+
+  .kivo-product-review-list p {
+    margin-top: 0.55rem;
+    color: #52657a;
+  }
+
+  .kivo-product-review-list footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    color: #8a9bae;
+    font-size: 0.9rem;
+    font-weight: 800;
+  }
+
   @keyframes kivo-product-rise {
     from {
       opacity: 0;
@@ -588,7 +767,8 @@
   }
 
   @media (max-width: 980px) {
-    .kivo-product-page {
+    .kivo-product-page,
+    .kivo-product-review-section {
       grid-template-columns: 1fr;
     }
 
@@ -616,6 +796,10 @@
     .kivo-product-gallery__thumbs {
       max-height: none;
       overflow: visible;
+    }
+
+    .kivo-product-review-list {
+      grid-template-columns: 1fr;
     }
   }
 {% endstylesheet %}
