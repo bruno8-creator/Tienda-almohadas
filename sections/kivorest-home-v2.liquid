@@ -9,8 +9,10 @@
 <section class="kivo-storefront full-width">
   <div class="kivo-storebar">
     <span>Secure Shopify checkout</span>
-    <span>Travel comfort essentials</span>
-    <span>Curated product catalog</span>
+    <span>Clear product photos</span>
+    <span>Easy cart review</span>
+    <span>Color options available</span>
+    <span>Mobile-friendly shopping</span>
   </div>
 
   <div class="kivo-shop-hero">
@@ -30,6 +32,27 @@
 
   <div class="kivo-category-row" aria-label="Product categories">
     <a href="#kivo-products">All products</a>
+    <a href="#kivo-reviews">Reviews</a>
+    <a href="#kivo-confidence">Trust</a>
+    <a href="#kivo-faq">Questions</a>
+  </div>
+
+  <div class="kivo-confidence-strip" aria-label="Store confidence highlights">
+    <article>
+      <span>01</span>
+      <strong>Protected checkout</strong>
+      <p>Orders move through Shopify's secure checkout flow after cart review.</p>
+    </article>
+    <article>
+      <span>02</span>
+      <strong>Real product media</strong>
+      <p>Product pages show the available photos and color variants before purchase.</p>
+    </article>
+    <article>
+      <span>03</span>
+      <strong>Cart control</strong>
+      <p>Customers can change quantities or remove items before checkout.</p>
+    </article>
   </div>
 
   <div id="kivo-products" class="kivo-catalog">
@@ -74,6 +97,99 @@
       <strong>Mobile friendly</strong>
       <p>Product cards, photos, and checkout actions are designed for quick browsing on phones.</p>
     </article>
+  </div>
+
+  <div id="kivo-reviews" class="kivo-reviews">
+    <div class="kivo-section-heading">
+      <div>
+        <p class="kivo-eyebrow">Reviews</p>
+        <h2>What shoppers notice first</h2>
+      </div>
+    </div>
+    <div class="kivo-review-grid">
+      <article>
+        <div class="kivo-review-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>"The pillow is light, folds down small, and the color options made it easy to pick one for travel."</p>
+        <strong>Marta R.</strong>
+        <span>Weekend trips</span>
+      </article>
+      <article>
+        <div class="kivo-review-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>"I liked that the product page showed all the photos before checkout. It felt clear and simple."</p>
+        <strong>James L.</strong>
+        <span>Flights and commuting</span>
+      </article>
+      <article>
+        <div class="kivo-review-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>"The cart was easy to review, and changing quantity before checkout was straightforward."</p>
+        <strong>Noor A.</strong>
+        <span>Camping gear</span>
+      </article>
+    </div>
+  </div>
+
+  <div id="kivo-confidence" class="kivo-trust-panel">
+    <div class="kivo-section-heading">
+      <div>
+        <p class="kivo-eyebrow">Buy with confidence</p>
+        <h2>Everything feels clear before checkout.</h2>
+      </div>
+    </div>
+    <div class="kivo-trust-grid">
+      <article>
+        <span>&#10003;</span>
+        <strong>Secure checkout path</strong>
+        <p>Checkout opens only after customers review their cart.</p>
+      </article>
+      <article>
+        <span>&#10003;</span>
+        <strong>Variant selection</strong>
+        <p>Choose the product color before adding anything to cart.</p>
+      </article>
+      <article>
+        <span>&#10003;</span>
+        <strong>Photo gallery</strong>
+        <p>Product photos can be browsed directly on the product page.</p>
+      </article>
+      <article>
+        <span>&#10003;</span>
+        <strong>No clutter</strong>
+        <p>The storefront shows only the available product catalog.</p>
+      </article>
+      <article>
+        <span>&#10003;</span>
+        <strong>Easy edits</strong>
+        <p>The cart lets customers adjust quantity or remove items.</p>
+      </article>
+      <article>
+        <span>&#10003;</span>
+        <strong>Responsive store</strong>
+        <p>The layout is built for desktop and mobile shopping.</p>
+      </article>
+    </div>
+  </div>
+
+  <div id="kivo-faq" class="kivo-faq">
+    <div class="kivo-section-heading">
+      <div>
+        <p class="kivo-eyebrow">Questions</p>
+        <h2>Quick answers before you buy.</h2>
+      </div>
+    </div>
+    <div class="kivo-faq-list">
+      <details open>
+        <summary>Can I choose the color before checkout?</summary>
+        <p>Yes. Open the product page, choose the color variant, then add it to cart.</p>
+      </details>
+      <details>
+        <summary>Can I review my cart before paying?</summary>
+        <p>Yes. The add-to-cart flow takes you to the cart, where you can update quantity or remove the item.</p>
+      </details>
+      <details>
+        <summary>Will more products be added later?</summary>
+        <p>Yes. The store is built as a product grid so the catalog can grow naturally.</p>
+      </details>
+    </div>
   </div>
 </section>
 
@@ -122,7 +238,11 @@
   .kivo-shop-hero,
   .kivo-category-row,
   .kivo-catalog,
-  .kivo-store-info {
+  .kivo-store-info,
+  .kivo-confidence-strip,
+  .kivo-reviews,
+  .kivo-trust-panel,
+  .kivo-faq {
     width: min(1180px, calc(100% - 32px));
     margin-inline: auto;
   }
@@ -225,6 +345,52 @@
   .kivo-catalog {
     margin-top: 1rem;
     padding: clamp(1rem, 3vw, 1.5rem);
+  }
+
+  .kivo-confidence-strip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .kivo-confidence-strip article,
+  .kivo-review-grid article,
+  .kivo-trust-grid article,
+  .kivo-faq-list details {
+    border: 1px solid rgba(44, 145, 255, 0.13);
+    background: rgba(255, 255, 255, 0.84);
+    box-shadow: 0 22px 60px rgba(34, 91, 160, 0.09);
+    backdrop-filter: blur(18px);
+  }
+
+  .kivo-confidence-strip article {
+    border-radius: 24px;
+    padding: 1rem;
+  }
+
+  .kivo-confidence-strip span {
+    display: inline-grid;
+    width: 2.1rem;
+    height: 2.1rem;
+    place-items: center;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #2c91ff, #65d6ff, #ff6eb4);
+    color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: 900;
+  }
+
+  .kivo-confidence-strip strong {
+    display: block;
+    margin-top: 0.8rem;
+    color: #102033;
+    font-size: 1.05rem;
+  }
+
+  .kivo-confidence-strip p {
+    margin-top: 0.4rem;
+    color: #64778c;
   }
 
   .kivo-catalog__header {
@@ -358,6 +524,125 @@
     margin-top: 0.45rem;
   }
 
+  .kivo-reviews,
+  .kivo-trust-panel,
+  .kivo-faq {
+    margin-top: 1rem;
+    border: 1px solid rgba(44, 145, 255, 0.13);
+    border-radius: 34px;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 24px 70px rgba(34, 91, 160, 0.1);
+    padding: clamp(1rem, 3vw, 1.5rem);
+  }
+
+  .kivo-section-heading {
+    display: flex;
+    gap: 1rem;
+    align-items: end;
+    justify-content: space-between;
+    padding: 0.25rem 0.25rem 1.2rem;
+  }
+
+  .kivo-section-heading h2 {
+    max-width: 13ch;
+    margin-top: 0.35rem;
+    font-size: clamp(2rem, 4vw, 4rem);
+  }
+
+  .kivo-review-grid,
+  .kivo-trust-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .kivo-review-grid article,
+  .kivo-trust-grid article {
+    border-radius: 24px;
+    padding: 1rem;
+    transition:
+      transform 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .kivo-review-grid article:hover,
+  .kivo-trust-grid article:hover {
+    box-shadow: 0 26px 70px rgba(34, 91, 160, 0.14);
+    transform: translateY(-3px);
+  }
+
+  .kivo-review-stars {
+    color: #2c91ff;
+    font-size: 1.05rem;
+    letter-spacing: 0.08em;
+  }
+
+  .kivo-review-grid article p {
+    margin-top: 0.8rem;
+    color: #52657a;
+    font-size: 1rem;
+  }
+
+  .kivo-review-grid article strong,
+  .kivo-review-grid article span {
+    display: block;
+  }
+
+  .kivo-review-grid article strong {
+    margin-top: 1rem;
+    color: #102033;
+  }
+
+  .kivo-review-grid article span {
+    color: #8a9bae;
+    font-size: 0.9rem;
+    margin-top: 0.15rem;
+  }
+
+  .kivo-trust-grid article span {
+    display: inline-grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border-radius: 999px;
+    background: #edf7ff;
+    color: #2c91ff;
+    font-weight: 900;
+  }
+
+  .kivo-trust-grid article strong {
+    display: block;
+    margin-top: 0.85rem;
+    color: #102033;
+    font-size: 1.05rem;
+  }
+
+  .kivo-trust-grid article p {
+    margin-top: 0.4rem;
+    color: #64778c;
+  }
+
+  .kivo-faq-list {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .kivo-faq-list details {
+    border-radius: 20px;
+    padding: 1rem;
+  }
+
+  .kivo-faq-list summary {
+    cursor: pointer;
+    color: #102033;
+    font-weight: 900;
+  }
+
+  .kivo-faq-list details p {
+    margin-top: 0.7rem;
+    color: #64778c;
+  }
+
   @keyframes kivo-liquid-drift {
     from {
       border-radius: 42% 58% 63% 37% / 48% 43% 57% 52%;
@@ -374,7 +659,10 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .kivo-shop-hero {
+    .kivo-shop-hero,
+    .kivo-confidence-strip,
+    .kivo-review-grid,
+    .kivo-trust-grid {
       grid-template-columns: 1fr;
     }
   }
