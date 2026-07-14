@@ -303,6 +303,8 @@
 
   .kivo-cart-update,
   .kivo-cart-checkout {
+    position: relative;
+    overflow: hidden;
     display: inline-flex;
     min-height: 3.15rem;
     align-items: center;
@@ -319,21 +321,40 @@
   }
 
   .kivo-cart-update {
-    background: #edf7ff;
+    background:
+      linear-gradient(#ffffff, #ffffff) padding-box,
+      linear-gradient(135deg, #65d6ff, #8b6cff, #ff6eb4) border-box;
+    border: 1px solid transparent;
+    box-shadow: 0 14px 32px rgba(44, 145, 255, 0.14);
     color: #102033;
   }
 
   .kivo-cart-checkout {
-    background: linear-gradient(135deg, #2c91ff, #73c0ff);
-    box-shadow: 0 18px 45px rgba(43, 145, 255, 0.28);
+    background:
+      radial-gradient(circle at 18% 20%, rgba(255, 255, 255, 0.74), transparent 0.85rem),
+      linear-gradient(135deg, #2c91ff 0%, #5ee0ff 34%, #8b6cff 68%, #ff6eb4 100%);
+    box-shadow:
+      0 18px 45px rgba(43, 145, 255, 0.3),
+      0 8px 22px rgba(255, 110, 180, 0.2);
     color: #ffffff;
+  }
+
+  .kivo-cart-checkout::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(110deg, rgba(255, 255, 255, 0.36), transparent 34%, rgba(255, 255, 255, 0.2));
   }
 
   .kivo-cart-update:hover,
   .kivo-cart-checkout:hover {
-    box-shadow: 0 22px 55px rgba(43, 145, 255, 0.28);
-    filter: saturate(1.08);
-    transform: translateY(-2px);
+    box-shadow:
+      0 24px 58px rgba(43, 145, 255, 0.34),
+      0 12px 28px rgba(255, 110, 180, 0.22);
+    filter: saturate(1.16) brightness(1.03);
+    transform: translateY(-3px);
   }
 
   .kivo-cart-continue {
