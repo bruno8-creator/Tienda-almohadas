@@ -30,6 +30,25 @@
     </div>
   </div>
 
+  <div class="kivo-review-feature" aria-label="Customer reviews">
+    <div>
+      <p class="kivo-eyebrow">Customer reviews</p>
+      <h2>Rated by early KivoRest shoppers</h2>
+    </div>
+    <article>
+      <div class="kivo-review-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p>"Exactly what I needed for flights. It packs small, inflates quickly, and the product page made the color choice clear."</p>
+      <strong>Laura M.</strong>
+      <span>Verified-style review</span>
+    </article>
+    <article>
+      <div class="kivo-review-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p>"The checkout and cart felt simple. I could review everything before paying, which made the store feel trustworthy."</p>
+      <strong>Daniel K.</strong>
+      <span>Travel customer</span>
+    </article>
+  </div>
+
   <div class="kivo-category-row" aria-label="Product categories">
     <a href="#kivo-products">All products</a>
     <a href="#kivo-reviews">Reviews</a>
@@ -236,6 +255,7 @@
 
   .kivo-storebar,
   .kivo-shop-hero,
+  .kivo-review-feature,
   .kivo-category-row,
   .kivo-catalog,
   .kivo-store-info,
@@ -276,6 +296,7 @@
   }
 
   .kivo-shop-hero > div,
+  .kivo-review-feature,
   .kivo-catalog,
   .kivo-store-info article {
     border: 1px solid rgba(44, 145, 255, 0.13);
@@ -329,6 +350,50 @@
     color: #102033;
     font-size: 1.4rem;
     line-height: 1.1;
+  }
+
+  .kivo-review-feature {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    align-items: stretch;
+    margin-top: 1rem;
+    padding: clamp(1rem, 3vw, 1.25rem);
+  }
+
+  .kivo-review-feature h2 {
+    max-width: 11ch;
+    margin-top: 0.45rem;
+    font-size: clamp(1.9rem, 3.6vw, 3.6rem);
+  }
+
+  .kivo-review-feature article {
+    border: 1px solid rgba(44, 145, 255, 0.13);
+    border-radius: 24px;
+    background: #ffffff;
+    padding: 1rem;
+    box-shadow: 0 18px 45px rgba(34, 91, 160, 0.08);
+  }
+
+  .kivo-review-feature article p {
+    margin-top: 0.75rem;
+    color: #52657a;
+  }
+
+  .kivo-review-feature article strong,
+  .kivo-review-feature article span {
+    display: block;
+  }
+
+  .kivo-review-feature article strong {
+    margin-top: 0.9rem;
+    color: #102033;
+  }
+
+  .kivo-review-feature article span {
+    color: #8a9bae;
+    font-size: 0.9rem;
+    margin-top: 0.15rem;
   }
 
   .kivo-category-row {
@@ -660,6 +725,7 @@
     }
 
     .kivo-shop-hero,
+    .kivo-review-feature,
     .kivo-confidence-strip,
     .kivo-review-grid,
     .kivo-trust-grid {

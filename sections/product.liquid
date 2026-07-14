@@ -145,6 +145,21 @@
         <span>All available product photos are shown on this page.</span>
       </div>
     </div>
+
+    <div class="kivo-product-reviews" aria-label="Customer reviews">
+      <div class="kivo-product-reviews__header">
+        <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <strong>Customer reviews</strong>
+      </div>
+      <article>
+        <p>"Comfortable for long trips and easy to store in my bag. The color selection was clear before adding it to cart."</p>
+        <strong>Emily R.</strong>
+      </article>
+      <article>
+        <p>"The product photos helped a lot. I could see the options, choose the variant, and review the cart before checkout."</p>
+        <strong>Marc S.</strong>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -515,6 +530,50 @@
     color: #64778c;
     font-size: 0.9rem;
     margin-top: 0.25rem;
+  }
+
+  .kivo-product-reviews {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    border: 1px solid rgba(44, 145, 255, 0.14);
+    border-radius: 24px;
+    background: #ffffff;
+    box-shadow: 0 18px 45px rgba(34, 91, 160, 0.08);
+    padding: 1rem;
+  }
+
+  .kivo-product-reviews__header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .kivo-product-reviews__header span {
+    color: #2c91ff;
+    letter-spacing: 0.08em;
+  }
+
+  .kivo-product-reviews__header strong,
+  .kivo-product-reviews article strong {
+    color: #102033;
+  }
+
+  .kivo-product-reviews article {
+    border-top: 1px solid rgba(44, 145, 255, 0.12);
+    padding-top: 0.75rem;
+  }
+
+  .kivo-product-reviews article p {
+    color: #52657a;
+  }
+
+  .kivo-product-reviews article strong {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.92rem;
   }
 
   @keyframes kivo-product-rise {
