@@ -10,7 +10,7 @@
 {
   "sections": {
     "main": {
-      "type": "kivorest-home",
+      "type": "kivorest-home-v2",
       "settings": {}
     }
   },
