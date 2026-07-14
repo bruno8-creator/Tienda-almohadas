@@ -12,10 +12,24 @@
     {% if product.images.size > 0 %}
       <div class="kivo-product-gallery__main">
         {% render 'image', class: 'kivo-product-image-main', image: product.featured_image, width: 1200 %}
+        <div class="kivo-gallery-controls" aria-label="Gallery controls">
+          <button type="button" data-kivo-gallery-prev aria-label="Previous product image">‹</button>
+          <button type="button" data-kivo-gallery-next aria-label="Next product image">›</button>
+        </div>
       </div>
       <div class="kivo-product-gallery__thumbs" aria-label="Product images">
         {% for image in product.images %}
-          {% render 'image', class: 'kivo-product-thumb', image: image, width: 360 %}
+          <button
+            class="kivo-product-thumb{% if forloop.first %} is-active{% endif %}"
+            type="button"
+            aria-label="Show product image {{ forloop.index }}"
+            data-kivo-thumb
+            data-full-src="{{ image | image_url: width: 1200 }}"
+            data-full-srcset="{{ image | image_url: width: 352 }} 352w, {{ image | image_url: width: 832 }} 832w, {{ image | image_url: width: 1200 }} 1200w"
+            data-full-alt="{{ image.alt | default: product.title | escape }}"
+          >
+            {{ image | image_url: width: 360 | image_tag: loading: 'lazy' }}
+          </button>
         {% endfor %}
       </div>
     {% else %}
@@ -46,8 +60,48 @@
 
     <div class="kivo-product-form">
       {% form 'product', product %}
-        <label for="Variant-{{ section.id }}">Color / variant</label>
-        <select id="Variant-{{ section.id }}" name="id">
+        <label>Color</label>
+        <div class="kivo-color-options" aria-label="Choose a color">
+          {% for variant in product.variants %}
+            {% liquid
+              assign swatch_color = '#8fc7ff'
+              assign variant_name = variant.title | downcase
+              if variant_name contains 'red'
+                assign swatch_color = '#d94b4b'
+              elsif variant_name contains 'green'
+                assign swatch_color = '#5aa86a'
+              elsif variant_name contains 'light blue'
+                assign swatch_color = '#86cfff'
+              elsif variant_name contains 'dark blue'
+                assign swatch_color = '#2453a6'
+              elsif variant_name contains 'dark purple'
+                assign swatch_color = '#4f327d'
+              elsif variant_name contains 'purple'
+                assign swatch_color = '#8d5bd4'
+              endif
+            %}
+            <button
+              class="kivo-color-swatch{% if variant == current_variant %} is-active{% endif %}"
+              type="button"
+              data-kivo-variant
+              data-variant-id="{{ variant.id }}"
+              data-variant-price="{{ variant.price | money }}"
+              {% if variant.featured_image %}
+                data-full-src="{{ variant.featured_image | image_url: width: 1200 }}"
+                data-full-srcset="{{ variant.featured_image | image_url: width: 352 }} 352w, {{ variant.featured_image | image_url: width: 832 }} 832w, {{ variant.featured_image | image_url: width: 1200 }} 1200w"
+                data-full-alt="{{ variant.featured_image.alt | default: product.title | escape }}"
+              {% endif %}
+              {% unless variant.available %}disabled{% endunless %}
+              aria-pressed="{% if variant == current_variant %}true{% else %}false{% endif %}"
+            >
+              <span style="--swatch-color: {{ swatch_color }}"></span>
+              {{ variant.title }}
+            </button>
+          {% endfor %}
+        </div>
+
+        <label class="kivo-visually-hidden" for="Variant-{{ section.id }}">Variant</label>
+        <select class="kivo-variant-select" id="Variant-{{ section.id }}" name="id">
           {% for variant in product.variants %}
             <option
               value="{{ variant.id }}"
@@ -120,6 +174,7 @@
   .kivo-product-gallery__main {
     overflow: hidden;
     display: grid;
+    position: relative;
     min-height: clamp(24rem, 54vw, 43rem);
     place-items: center;
     border: 1px solid rgba(44, 145, 255, 0.14);
@@ -142,6 +197,39 @@
     transform: scale(1.035) rotate(-0.7deg);
   }
 
+  .kivo-gallery-controls {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 3;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .kivo-gallery-controls button {
+    display: grid;
+    width: 2.8rem;
+    height: 2.8rem;
+    place-items: center;
+    border: 1px solid rgba(44, 145, 255, 0.18);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow: 0 12px 28px rgba(34, 91, 160, 0.14);
+    color: #102033;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: 900;
+    line-height: 1;
+    transition:
+      transform 160ms ease,
+      box-shadow 160ms ease;
+  }
+
+  .kivo-gallery-controls button:hover {
+    box-shadow: 0 16px 36px rgba(34, 91, 160, 0.18);
+    transform: translateY(-1px);
+  }
+
   .kivo-product-gallery__fallback img {
     width: min(80%, 32rem);
     border-radius: 36px;
@@ -159,18 +247,25 @@
 
   .kivo-product-thumb {
     overflow: hidden;
+    cursor: pointer;
     aspect-ratio: 1;
     border: 1px solid rgba(44, 145, 255, 0.14);
     border-radius: 18px;
     background: #ffffff;
+    padding: 0;
     transition:
       transform 160ms ease,
       box-shadow 160ms ease;
   }
 
-  .kivo-product-thumb:hover {
+  .kivo-product-thumb:hover,
+  .kivo-product-thumb.is-active {
     box-shadow: 0 12px 34px rgba(34, 91, 160, 0.14);
     transform: translateY(-3px);
+  }
+
+  .kivo-product-thumb.is-active {
+    border-color: #2c91ff;
   }
 
   .kivo-product-thumb img {
@@ -265,6 +360,67 @@
   .kivo-product-form label {
     color: #102033;
     font-weight: 900;
+  }
+
+  .kivo-visually-hidden {
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .kivo-color-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+  }
+
+  .kivo-color-swatch {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    gap: 0.55rem;
+    border: 1px solid rgba(44, 145, 255, 0.18);
+    border-radius: 18px;
+    background: #ffffff;
+    color: #102033;
+    cursor: pointer;
+    font-weight: 800;
+    justify-content: flex-start;
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    transition:
+      border-color 160ms ease,
+      box-shadow 160ms ease,
+      transform 160ms ease;
+  }
+
+  .kivo-color-swatch:hover,
+  .kivo-color-swatch.is-active {
+    border-color: #2c91ff;
+    box-shadow: 0 12px 28px rgba(44, 145, 255, 0.16);
+    transform: translateY(-1px);
+  }
+
+  .kivo-color-swatch:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+
+  .kivo-color-swatch span {
+    width: 1.15rem;
+    height: 1.15rem;
+    flex: 0 0 auto;
+    border: 2px solid #ffffff;
+    border-radius: 999px;
+    background: var(--swatch-color);
+    box-shadow: 0 0 0 1px rgba(16, 32, 51, 0.16);
+  }
+
+  .kivo-variant-select {
+    display: none;
   }
 
   .kivo-product-form select,
@@ -387,6 +543,64 @@
     }
   }
 {% endstylesheet %}
+
+{% javascript %}
+  document.addEventListener('click', (event) => {
+    const thumb = event.target.closest('[data-kivo-thumb]');
+    const variantButton = event.target.closest('[data-kivo-variant]');
+    const galleryNext = event.target.closest('[data-kivo-gallery-next]');
+    const galleryPrev = event.target.closest('[data-kivo-gallery-prev]');
+    const page = event.target.closest('.kivo-product-page');
+    if (!page || (!thumb && !variantButton && !galleryNext && !galleryPrev)) return;
+
+    const mainImage = page.querySelector('.kivo-product-image-main img');
+    const price = page.querySelector('.kivo-product-price');
+    const variantSelect = page.querySelector('select[name="id"]');
+
+    const updateImage = (source) => {
+      if (!mainImage || !source?.dataset.fullSrc) return;
+      mainImage.src = source.dataset.fullSrc;
+      if (source.dataset.fullSrcset) mainImage.srcset = source.dataset.fullSrcset;
+      if (source.dataset.fullAlt) mainImage.alt = source.dataset.fullAlt;
+    };
+
+    if (thumb) {
+      page.querySelectorAll('[data-kivo-thumb]').forEach((item) => item.classList.remove('is-active'));
+      thumb.classList.add('is-active');
+      updateImage(thumb);
+    }
+
+    if (galleryNext || galleryPrev) {
+      const thumbs = Array.from(page.querySelectorAll('[data-kivo-thumb]'));
+      if (thumbs.length) {
+        const currentIndex = Math.max(0, thumbs.findIndex((item) => item.classList.contains('is-active')));
+        const direction = galleryNext ? 1 : -1;
+        const nextIndex = (currentIndex + direction + thumbs.length) % thumbs.length;
+        thumbs[nextIndex].click();
+      }
+    }
+
+    if (variantButton) {
+      page.querySelectorAll('[data-kivo-variant]').forEach((item) => {
+        item.classList.remove('is-active');
+        item.setAttribute('aria-pressed', 'false');
+      });
+      variantButton.classList.add('is-active');
+      variantButton.setAttribute('aria-pressed', 'true');
+
+      if (variantSelect) {
+        variantSelect.value = variantButton.dataset.variantId;
+        variantSelect.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+
+      if (price && variantButton.dataset.variantPrice) {
+        price.textContent = variantButton.dataset.variantPrice;
+      }
+
+      updateImage(variantButton);
+    }
+  });
+{% endjavascript %}
 
 {% schema %}
 {
