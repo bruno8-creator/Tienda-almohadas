@@ -13,6 +13,14 @@
   endif
 %}
 
+<nav class="kivo-product-breadcrumb" aria-label="Breadcrumb">
+  <a href="{{ routes.root_url }}">Home</a>
+  <span>/</span>
+  <a href="{{ routes.all_products_collection_url }}">Products</a>
+  <span>/</span>
+  <span>{{ product.title }}</span>
+</nav>
+
 <section class="kivo-product-page">
   <div class="kivo-product-gallery">
     {% if product.images.size > 0 %}
@@ -50,6 +58,7 @@
     <h1>{{ product.title }}</h1>
     <div class="kivo-product-rating" aria-label="Customer rating">
       <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <a href="#kivo-product-reviews">Product reviews</a>
       <strong>
         {% if is_wedge_product %}
           Support for home, office, travel, and rest
@@ -193,7 +202,7 @@
   </div>
 </section>
 
-<section class="kivo-product-review-section" aria-label="{{ product.title | escape }} product reviews">
+<section id="kivo-product-reviews" class="kivo-product-review-section" aria-label="{{ product.title | escape }} product reviews">
   <div class="kivo-product-review-summary">
     <p class="kivo-product-eyebrow">Product reviews</p>
     <h2>{{ product.title }} reviews</h2>
@@ -801,6 +810,294 @@
     color: #8a9bae;
     font-size: 0.9rem;
     font-weight: 800;
+  }
+
+  .kivo-product-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    width: min(1320px, calc(100% - 48px));
+    margin: 1.6rem auto 0;
+    color: #6d6d6d;
+    font-size: 0.92rem;
+  }
+
+  .kivo-product-breadcrumb a {
+    color: #111111;
+    text-decoration: none;
+  }
+
+  .kivo-product-page {
+    grid-template-columns: minmax(0, 1.45fr) minmax(360px, 0.72fr);
+    gap: clamp(2rem, 5vw, 5.5rem);
+    width: min(1320px, calc(100% - 48px));
+    margin: 1.6rem auto 4rem;
+  }
+
+  .kivo-product-gallery {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr);
+    gap: 1.6rem;
+    align-items: start;
+  }
+
+  .kivo-product-gallery__main {
+    grid-column: 2;
+    min-height: clamp(36rem, 58vw, 54rem);
+    border: 0;
+    border-radius: 0;
+    background: #ffffff;
+    box-shadow: none;
+  }
+
+  .kivo-product-image-main img {
+    max-height: 52rem;
+    padding: 0;
+    filter: drop-shadow(0 22px 30px rgba(0, 0, 0, 0.12));
+  }
+
+  .kivo-product-gallery__main:hover .kivo-product-image-main img {
+    transform: scale(1.012);
+  }
+
+  .kivo-product-gallery__thumbs {
+    grid-column: 1;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.05rem;
+    max-height: min(54rem, calc(100vh - 12rem));
+    margin-top: 0;
+    overflow: auto;
+    padding-right: 0;
+  }
+
+  .kivo-product-thumb {
+    border: 0;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+    background: #ffffff;
+    box-shadow: none;
+  }
+
+  .kivo-product-thumb:hover,
+  .kivo-product-thumb.is-active {
+    border-color: #111111;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .kivo-product-thumb img {
+    object-fit: contain;
+  }
+
+  .kivo-gallery-controls {
+    inset: auto 0 2rem 0;
+    justify-content: space-between;
+    padding-inline: 1.2rem;
+  }
+
+  .kivo-gallery-controls button {
+    width: 3rem;
+    height: 3rem;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    color: #111111;
+    font-size: 3rem;
+    font-weight: 400;
+  }
+
+  .kivo-gallery-controls button:hover {
+    box-shadow: none;
+    transform: translateX(2px);
+  }
+
+  .kivo-product-panel {
+    top: 6.5rem;
+    border: 0;
+    border-radius: 0;
+    background: #ffffff;
+    box-shadow: none;
+    backdrop-filter: none;
+    padding: clamp(1rem, 2.4vw, 2rem) 0;
+  }
+
+  .kivo-product-eyebrow {
+    color: #111111;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+  }
+
+  .kivo-product-panel h1 {
+    max-width: 18ch;
+    margin-top: 0.7rem;
+    color: #111111;
+    font-size: clamp(2rem, 3.1vw, 3.2rem);
+    font-weight: 500;
+    line-height: 1.08;
+    text-transform: uppercase;
+  }
+
+  .kivo-product-rating {
+    gap: 0.65rem;
+    color: #111111;
+    font-size: 0.95rem;
+  }
+
+  .kivo-product-rating span {
+    color: #000000;
+  }
+
+  .kivo-product-rating a {
+    color: #111111;
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .kivo-product-rating strong {
+    flex-basis: 100%;
+    color: #333333;
+    font-weight: 500;
+  }
+
+  .kivo-product-price {
+    margin-top: 1.05rem;
+    color: #111111;
+    font-size: 1.35rem;
+    font-weight: 700;
+  }
+
+  .kivo-product-description {
+    max-height: 12rem;
+    margin-top: 0.85rem;
+    color: #333333;
+    font-size: 0.98rem;
+  }
+
+  .kivo-product-promises {
+    gap: 0;
+    border-block: 1px solid #e8e8e8;
+    margin-top: 1.35rem;
+    padding-block: 1rem;
+  }
+
+  .kivo-product-promises span {
+    width: 100%;
+    border-radius: 0;
+    background: transparent;
+    color: #111111;
+    font-size: 0.92rem;
+    font-weight: 600;
+    padding: 0.25rem 0;
+  }
+
+  .kivo-product-form {
+    margin-top: 1.25rem;
+  }
+
+  .kivo-product-form label {
+    color: #111111;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .kivo-color-options {
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  }
+
+  .kivo-color-swatch {
+    min-height: 2.9rem;
+    border: 1px solid #cfcfcf;
+    border-radius: 0;
+    color: #111111;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
+  .kivo-color-swatch:hover,
+  .kivo-color-swatch.is-active {
+    border-color: #111111;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .kivo-product-form input[type="number"] {
+    min-height: 3.1rem;
+    border: 1px solid #cfcfcf;
+    border-radius: 0;
+  }
+
+  .kivo-product-form .kivo-add-to-cart {
+    min-height: 4.25rem;
+    border-radius: 0;
+    background: #000000;
+    box-shadow: none;
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .kivo-product-form .kivo-add-to-cart::after {
+    content: none;
+  }
+
+  .kivo-product-form .kivo-add-to-cart:hover {
+    background: #222222;
+    box-shadow: none;
+    filter: none;
+    transform: none;
+  }
+
+  .kivo-product-trust,
+  .kivo-product-reviews {
+    border-top: 1px solid #e8e8e8;
+    margin-top: 1.25rem;
+    padding-top: 1.2rem;
+  }
+
+  .kivo-product-trust div,
+  .kivo-product-reviews {
+    border-radius: 0;
+    background: #ffffff;
+    box-shadow: none;
+    padding-inline: 0;
+  }
+
+  .kivo-product-trust strong,
+  .kivo-product-reviews__header strong {
+    color: #111111;
+    font-size: 0.92rem;
+    text-transform: uppercase;
+  }
+
+  .kivo-product-trust span,
+  .kivo-product-reviews article p {
+    color: #555555;
+  }
+
+  .kivo-product-reviews__header span,
+  .kivo-product-review-score span,
+  .kivo-product-review-card__top span {
+    color: #000000;
+  }
+
+  .kivo-product-review-section {
+    width: min(1320px, calc(100% - 48px));
+    margin: 0 auto 5rem;
+  }
+
+  .kivo-product-review-summary,
+  .kivo-product-review-list article {
+    border: 1px solid #e5e5e5;
+    border-radius: 0;
+    background: #ffffff;
+    box-shadow: none;
+  }
+
+  .kivo-product-review-bars i::before {
+    background: #111111;
   }
 
   @keyframes kivo-product-rise {

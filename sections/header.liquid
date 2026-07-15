@@ -1,3 +1,9 @@
+<div class="kivo-announcement" aria-label="Store benefits">
+  <span>Free shipping over EUR 50</span>
+  <span>Need help? Contact us anytime</span>
+  <span>Secure Shopify checkout</span>
+</div>
+
 <header>
   <a class="header__brand" href="{{ routes.root_url }}" aria-label="KivoRest">
     <img src="{{ 'kivorest-logo.png' | asset_url }}" alt="KivoRest" width="48" height="48">
@@ -6,7 +12,9 @@
 
   <div class="header__menu">
     <a href="{{ routes.root_url }}">Home</a>
-    <a href="{{ routes.all_products_collection_url }}">Products</a>
+    <a href="{{ routes.all_products_collection_url }}">Shop</a>
+    <a href="{{ routes.all_products_collection_url }}">Bestsellers</a>
+    <a href="{{ routes.root_url }}#kivo-confidence">About</a>
   </div>
 
   <div class="header__icons">
@@ -25,23 +33,40 @@
 </header>
 
 {% stylesheet %}
+  .kivo-announcement {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    min-height: 2.8rem;
+    align-items: center;
+    background: #000000;
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .kivo-announcement span + span {
+    border-left: 1px solid rgba(255, 255, 255, 0.32);
+  }
+
   header {
     position: sticky;
     top: 0;
     z-index: 20;
-    min-height: 5rem;
+    min-height: 5.25rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1.25rem;
-    width: min(1180px, calc(100% - 32px));
-    margin: 0.75rem auto;
-    padding: 0.75rem 1rem;
-    border: 1px solid rgba(66, 154, 248, 0.14);
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.82);
-    box-shadow: 0 20px 60px rgba(34, 91, 160, 0.12);
-    backdrop-filter: blur(18px);
+    width: 100%;
+    margin: 0;
+    padding: 0.9rem clamp(1rem, 4vw, 3.2rem);
+    border-bottom: 1px solid #eeeeee;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: none;
+    backdrop-filter: blur(12px);
   }
 
   header a {
@@ -55,14 +80,17 @@
 
   header .header__brand {
     gap: 0.65rem;
-    font-size: 1.15rem;
-    font-weight: 900;
+    color: #111111;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 500;
+    letter-spacing: -0.04em;
   }
 
   header .header__brand img {
     width: 2.6rem;
     height: 2.6rem;
-    border-radius: 16px;
+    border-radius: 12px;
     object-fit: cover;
   }
 
@@ -76,7 +104,7 @@
     height: 1.25rem;
     place-items: center;
     border-radius: 999px;
-    background: #2c91ff;
+    background: #111111;
     color: #fff;
     font-size: 0.75rem;
   }
@@ -93,33 +121,39 @@
   }
 
   header .header__menu a {
-    border-radius: 999px;
-    color: #52657a;
-    font-size: 0.95rem;
-    font-weight: 700;
-    padding: 0.65rem 0.85rem;
+    color: #222222;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.45rem 0.65rem;
     transition:
-      background-color 160ms ease,
       color 160ms ease,
       transform 160ms ease;
   }
 
   header .header__menu a:hover {
-    background: #edf7ff;
-    color: #102033;
+    color: #777777;
     transform: translateY(-1px);
   }
 
   header .header__cart {
-    width: 2.9rem;
-    height: 2.9rem;
+    width: 2.6rem;
+    height: 2.6rem;
     border-radius: 999px;
-    background: #f1f8ff;
+    background: #ffffff;
   }
 
   @media (max-width: 760px) {
+    .kivo-announcement {
+      grid-template-columns: 1fr;
+      gap: 0.35rem;
+      padding: 0.55rem 1rem;
+    }
+
+    .kivo-announcement span + span {
+      border-left: 0;
+    }
+
     header {
-      border-radius: 28px;
       flex-wrap: wrap;
     }
 
