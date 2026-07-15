@@ -97,40 +97,34 @@
   <div id="kivo-confidence" class="kivo-trust-panel">
     <div class="kivo-section-heading">
       <div>
-        <p class="kivo-eyebrow">Buy with confidence</p>
-        <h2>Everything feels clear before checkout.</h2>
+        <p class="kivo-eyebrow">Trust</p>
+        <h2>Shop with confidence.</h2>
       </div>
     </div>
     <div class="kivo-trust-grid">
       <article>
         <span>&#10003;</span>
-        <strong>Secure checkout path</strong>
-        <p>Checkout opens only after customers review their cart.</p>
+        <strong>Secure checkout</strong>
       </article>
       <article>
         <span>&#10003;</span>
         <strong>Variant selection</strong>
-        <p>Choose the product color before adding anything to cart.</p>
       </article>
       <article>
         <span>&#10003;</span>
         <strong>Photo gallery</strong>
-        <p>Product photos can be browsed directly on the product page.</p>
       </article>
       <article>
         <span>&#10003;</span>
-        <strong>No clutter</strong>
-        <p>The storefront shows only the available product catalog.</p>
+        <strong>Real catalog</strong>
       </article>
       <article>
         <span>&#10003;</span>
-        <strong>Easy edits</strong>
-        <p>The cart lets customers adjust quantity or remove items.</p>
+        <strong>Easy cart edits</strong>
       </article>
       <article>
         <span>&#10003;</span>
-        <strong>Responsive store</strong>
-        <p>The layout is built for desktop and mobile shopping.</p>
+        <strong>Mobile ready</strong>
       </article>
     </div>
   </div>
@@ -497,12 +491,12 @@
 
   .kivo-trust-panel,
   .kivo-faq {
-    margin-top: 1rem;
+    margin-top: 0.75rem;
     border: 1px solid rgba(44, 145, 255, 0.13);
-    border-radius: 34px;
-    background: rgba(255, 255, 255, 0.7);
-    box-shadow: 0 24px 70px rgba(34, 91, 160, 0.1);
-    padding: clamp(1rem, 3vw, 1.5rem);
+    border-radius: 0;
+    background: #ffffff;
+    box-shadow: none;
+    padding: 0.8rem;
   }
 
   .kivo-section-heading {
@@ -510,55 +504,57 @@
     gap: 1rem;
     align-items: end;
     justify-content: space-between;
-    padding: 0.25rem 0.25rem 1.2rem;
+    padding: 0.1rem 0.1rem 0.65rem;
   }
 
   .kivo-section-heading h2 {
-    max-width: 13ch;
-    margin-top: 0.35rem;
-    font-size: clamp(2rem, 4vw, 4rem);
+    max-width: none;
+    margin-top: 0.2rem;
+    font-size: clamp(1.25rem, 2vw, 1.8rem);
   }
 
   .kivo-trust-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0.45rem;
   }
 
   .kivo-trust-grid article {
-    border-radius: 24px;
-    padding: 1rem;
+    display: flex;
+    min-height: 3.1rem;
+    align-items: center;
+    gap: 0.45rem;
+    border-radius: 0;
+    padding: 0.55rem 0.6rem;
     transition:
       transform 180ms ease,
       box-shadow 180ms ease;
   }
 
   .kivo-trust-grid article:hover {
-    box-shadow: 0 26px 70px rgba(34, 91, 160, 0.14);
-    transform: translateY(-3px);
+    box-shadow: none;
+    transform: translateY(-1px);
   }
 
   .kivo-trust-grid article span {
     display: inline-grid;
-    width: 2rem;
-    height: 2rem;
+    width: 1.35rem;
+    height: 1.35rem;
+    flex: 0 0 auto;
     place-items: center;
     border-radius: 999px;
-    background: #edf7ff;
-    color: #2c91ff;
+    background: #111111;
+    color: #ffffff;
+    font-size: 0.75rem;
     font-weight: 900;
   }
 
   .kivo-trust-grid article strong {
     display: block;
-    margin-top: 0.85rem;
-    color: #102033;
-    font-size: 1.05rem;
-  }
-
-  .kivo-trust-grid article p {
-    margin-top: 0.4rem;
-    color: #64778c;
+    margin-top: 0;
+    color: #111111;
+    font-size: 0.82rem;
+    line-height: 1.1;
   }
 
   .kivo-faq-list {
