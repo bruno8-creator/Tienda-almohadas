@@ -77,7 +77,12 @@
             <h3>{{ product_item.title }}</h3>
             <p>{{ product_summary }}</p>
             <div class="kivo-product-tile__footer">
-              <strong>{{ product_item.price | money }}</strong>
+              <strong>
+                {{ product_item.price | money }}
+                {% if product_item.compare_at_price_max > product_item.price %}
+                  <s>{{ product_item.compare_at_price_max | money }}</s>
+                {% endif %}
+              </strong>
               <span>View product</span>
             </div>
           </div>
@@ -465,6 +470,13 @@
   .kivo-product-tile__footer strong {
     color: #102033;
     font-size: 1.1rem;
+  }
+
+  .kivo-product-tile__footer strong s {
+    margin-left: 0.45rem;
+    color: #777777;
+    font-size: 0.92rem;
+    font-weight: 500;
   }
 
   .kivo-product-tile__footer span {
