@@ -7,15 +7,12 @@
 
 {% liquid
   assign current_variant = product.selected_or_first_available_variant
+  assign kivo_discount_percent = 50
+  assign kivo_discount_multiplier = 100 | minus: kivo_discount_percent
+  assign current_campaign_price = current_variant.price | times: kivo_discount_multiplier | plus: 50 | divided_by: 100
   assign is_wedge_product = false
   if product.handle contains 'wedge'
     assign is_wedge_product = true
-  endif
-  assign has_valid_compare_price = false
-  assign current_saving = 0
-  if current_variant.compare_at_price > current_variant.price
-    assign has_valid_compare_price = true
-    assign current_saving = current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price
   endif
 %}
 
@@ -73,24 +70,10 @@
         {% endif %}
       </strong>
     </div>
-    <div class="kivo-product-price{% if has_valid_compare_price %} is-sale{% endif %}" data-kivo-price-wrap>
-      <span data-kivo-price>{{ current_variant.price | money }}</span>
-      <s
-        data-kivo-compare-price
-        {% unless has_valid_compare_price %}
-          hidden
-        {% endunless %}
-      >
-        {{ current_variant.compare_at_price | money }}
-      </s>
-      <em
-        data-kivo-saving
-        {% unless has_valid_compare_price %}
-          hidden
-        {% endunless %}
-      >
-        Save {{ current_saving }}%
-      </em>
+    <div class="kivo-product-price is-sale" data-kivo-price-wrap>
+      <span data-kivo-price>{{ current_campaign_price | money }}</span>
+      <s data-kivo-compare-price>{{ current_variant.price | money }}</s>
+      <em data-kivo-saving>{{ kivo_discount_percent }}% off in cart</em>
     </div>
 
     <div class="kivo-product-description">
@@ -138,10 +121,9 @@
               type="button"
               data-kivo-variant
               data-variant-id="{{ variant.id }}"
-              data-variant-price="{{ variant.price | money }}"
-              data-variant-compare-price="{{ variant.compare_at_price | money }}"
-              data-variant-has-compare="{% if variant.compare_at_price > variant.price %}true{% else %}false{% endif %}"
-              data-variant-saving="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price }}{% endif %}"
+              data-variant-price="{{ variant.price | times: kivo_discount_multiplier | plus: 50 | divided_by: 100 | money }}"
+              data-variant-compare-price="{{ variant.price | money }}"
+              data-variant-saving="{{ kivo_discount_percent }}% off in cart"
               {% if variant.featured_image %}
                 data-full-src="{{ variant.featured_image | image_url: width: 1200 }}"
                 data-full-srcset="{{ variant.featured_image | image_url: width: 352 }} 352w, {{ variant.featured_image | image_url: width: 832 }} 832w, {{ variant.featured_image | image_url: width: 1200 }} 1200w"
@@ -1254,15 +1236,8 @@
         price.textContent = variantButton.dataset.variantPrice;
       }
 
-      if (comparePrice) {
-        comparePrice.textContent = variantButton.dataset.variantComparePrice || '';
-        comparePrice.hidden = variantButton.dataset.variantHasCompare !== 'true';
-      }
-
-      if (saving) {
-        saving.textContent = `Save ${variantButton.dataset.variantSaving || 0}%`;
-        saving.hidden = variantButton.dataset.variantHasCompare !== 'true';
-      }
+      if (comparePrice) comparePrice.textContent = variantButton.dataset.variantComparePrice || '';
+      if (saving) saving.textContent = variantButton.dataset.variantSaving || '';
 
       updateImage(variantButton);
     }

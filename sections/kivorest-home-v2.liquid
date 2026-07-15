@@ -58,14 +58,13 @@
     <div class="kivo-product-grid">
       {% for product_item in collections.all.products %}
         {% liquid
+          assign kivo_discount_percent = 50
+          assign kivo_discount_multiplier = 100 | minus: kivo_discount_percent
+          assign product_campaign_price = product_item.price | times: kivo_discount_multiplier | plus: 50 | divided_by: 100
           assign product_summary = 'Inflatable support for flights, road trips, camping, and quick rest stops.'
-          assign product_badge = 'New arrival'
+          assign product_badge = '50% off in cart'
           if product_item.handle contains 'wedge'
             assign product_summary = 'Adjustable wedge support for your back, legs, arms, home, office, and travel.'
-          endif
-          if product_item.compare_at_price_max > product_item.price
-            assign product_saving = product_item.compare_at_price_max | minus: product_item.price | times: 100 | divided_by: product_item.compare_at_price_max
-            assign product_badge = 'Save ' | append: product_saving | append: '%'
           endif
         %}
         <a class="kivo-product-tile" href="{{ product_item.url }}">
@@ -78,10 +77,8 @@
             <p>{{ product_summary }}</p>
             <div class="kivo-product-tile__footer">
               <strong>
-                {{ product_item.price | money }}
-                {% if product_item.compare_at_price_max > product_item.price %}
-                  <s>{{ product_item.compare_at_price_max | money }}</s>
-                {% endif %}
+                {{ product_campaign_price | money }}
+                <s>{{ product_item.price | money }}</s>
               </strong>
               <span>View product</span>
             </div>

@@ -15,11 +15,10 @@
   {% paginate collection.products by 20 %}
     {% for product in collection.products %}
       {% liquid
-        assign collection_badge = 'Available now'
-        if product.compare_at_price_max > product.price
-          assign collection_saving = product.compare_at_price_max | minus: product.price | times: 100 | divided_by: product.compare_at_price_max
-          assign collection_badge = 'Save ' | append: collection_saving | append: '%'
-        endif
+        assign kivo_discount_percent = 50
+        assign kivo_discount_multiplier = 100 | minus: kivo_discount_percent
+        assign collection_campaign_price = product.price | times: kivo_discount_multiplier | plus: 50 | divided_by: 100
+        assign collection_badge = '50% off in cart'
       %}
       <a class="collection-product" href="{{ product.url }}">
         {% if product.featured_image %}
@@ -35,10 +34,8 @@
           <span>{{ collection_badge }}</span>
           <h2>{{ product.title | escape }}</h2>
           <p>
-            {{ product.price | money }}
-            {% if product.compare_at_price_max > product.price %}
-              <s>{{ product.compare_at_price_max | money }}</s>
-            {% endif %}
+            {{ collection_campaign_price | money }}
+            <s>{{ product.price | money }}</s>
           </p>
         </div>
       </a>
