@@ -14,6 +14,13 @@
   <div class="collection-products">
   {% paginate collection.products by 20 %}
     {% for product in collection.products %}
+      {% liquid
+        assign collection_badge = 'Available now'
+        if product.compare_at_price_max > product.price
+          assign collection_saving = product.compare_at_price_max | minus: product.price | times: 100 | divided_by: product.compare_at_price_max
+          assign collection_badge = 'Save ' | append: collection_saving | append: '%'
+        endif
+      %}
       <a class="collection-product" href="{{ product.url }}">
         {% if product.featured_image %}
           {% render 'image',
@@ -25,9 +32,14 @@
           %}
         {% endif %}
         <div class="collection-product__content">
-          <span>Available now</span>
+          <span>{{ collection_badge }}</span>
           <h2>{{ product.title | escape }}</h2>
-          <p>{{ product.price | money }}</p>
+          <p>
+            {{ product.price | money }}
+            {% if product.compare_at_price_max > product.price %}
+              <s>{{ product.compare_at_price_max | money }}</s>
+            {% endif %}
+          </p>
         </div>
       </a>
     {% endfor %}
@@ -129,6 +141,13 @@
     color: #102033;
     font-weight: 900;
     margin-top: 0.7rem;
+  }
+
+  .collection-product__content p s {
+    margin-left: 0.45rem;
+    color: #777777;
+    font-size: 0.92rem;
+    font-weight: 500;
   }
 
   @media (max-width: 980px) {

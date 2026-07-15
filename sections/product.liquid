@@ -11,6 +11,12 @@
   if product.handle contains 'wedge'
     assign is_wedge_product = true
   endif
+  assign has_valid_compare_price = false
+  assign current_saving = 0
+  if current_variant.compare_at_price > current_variant.price
+    assign has_valid_compare_price = true
+    assign current_saving = current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price
+  endif
 %}
 
 <nav class="kivo-product-breadcrumb" aria-label="Breadcrumb">
@@ -67,16 +73,24 @@
         {% endif %}
       </strong>
     </div>
-    <div class="kivo-product-price" data-kivo-price-wrap>
+    <div class="kivo-product-price{% if has_valid_compare_price %} is-sale{% endif %}" data-kivo-price-wrap>
       <span data-kivo-price>{{ current_variant.price | money }}</span>
       <s
         data-kivo-compare-price
-        {% unless current_variant.compare_at_price > current_variant.price %}
+        {% unless has_valid_compare_price %}
           hidden
         {% endunless %}
       >
         {{ current_variant.compare_at_price | money }}
       </s>
+      <em
+        data-kivo-saving
+        {% unless has_valid_compare_price %}
+          hidden
+        {% endunless %}
+      >
+        Save {{ current_saving }}%
+      </em>
     </div>
 
     <div class="kivo-product-description">
@@ -127,6 +141,7 @@
               data-variant-price="{{ variant.price | money }}"
               data-variant-compare-price="{{ variant.compare_at_price | money }}"
               data-variant-has-compare="{% if variant.compare_at_price > variant.price %}true{% else %}false{% endif %}"
+              data-variant-saving="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price }}{% endif %}"
               {% if variant.featured_image %}
                 data-full-src="{{ variant.featured_image | image_url: width: 1200 }}"
                 data-full-srcset="{{ variant.featured_image | image_url: width: 352 }} 352w, {{ variant.featured_image | image_url: width: 832 }} 832w, {{ variant.featured_image | image_url: width: 1200 }} 1200w"
@@ -458,6 +473,19 @@
     color: #777777;
     font-size: 1.15rem;
     font-weight: 500;
+  }
+
+  .kivo-product-price em {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #111111;
+    color: #111111;
+    font-size: 0.78rem;
+    font-style: normal;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    padding: 0.28rem 0.48rem;
+    text-transform: uppercase;
   }
 
   .kivo-product-description {
@@ -1183,6 +1211,7 @@
     const mainImage = page.querySelector('.kivo-product-image-main img');
     const price = page.querySelector('[data-kivo-price]');
     const comparePrice = page.querySelector('[data-kivo-compare-price]');
+    const saving = page.querySelector('[data-kivo-saving]');
     const variantSelect = page.querySelector('select[name="id"]');
 
     const updateImage = (source) => {
@@ -1228,6 +1257,11 @@
       if (comparePrice) {
         comparePrice.textContent = variantButton.dataset.variantComparePrice || '';
         comparePrice.hidden = variantButton.dataset.variantHasCompare !== 'true';
+      }
+
+      if (saving) {
+        saving.textContent = `Save ${variantButton.dataset.variantSaving || 0}%`;
+        saving.hidden = variantButton.dataset.variantHasCompare !== 'true';
       }
 
       updateImage(variantButton);
