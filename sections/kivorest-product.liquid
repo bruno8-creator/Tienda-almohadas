@@ -5,7 +5,13 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/product
 {% endcomment %}
 
-{% assign current_variant = product.selected_or_first_available_variant %}
+{% liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign is_wedge_product = false
+  if product.handle contains 'wedge'
+    assign is_wedge_product = true
+  endif
+%}
 
 <section class="kivo-product-page">
   <div class="kivo-product-gallery">
@@ -43,8 +49,14 @@
     <p class="kivo-product-eyebrow">KivoRest travel comfort</p>
     <h1>{{ product.title }}</h1>
     <div class="kivo-product-rating" aria-label="Customer rating">
-      <span>★★★★★</span>
-      <strong>Ready for long trips and quick getaways</strong>
+      <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <strong>
+        {% if is_wedge_product %}
+          Support for home, office, travel, and rest
+        {% else %}
+          Ready for long trips and quick getaways
+        {% endif %}
+      </strong>
     </div>
     <p class="kivo-product-price">{{ current_variant.price | money }}</p>
 
@@ -53,9 +65,15 @@
     </div>
 
     <div class="kivo-product-promises">
-      <span>Adjustable firmness</span>
-      <span>Lightweight and foldable</span>
-      <span>Ideal for planes, cars, and camping</span>
+      {% if is_wedge_product %}
+        <span>Adjustable wedge support</span>
+        <span>Back, leg, and arm comfort</span>
+        <span>Home, office, camping, and travel</span>
+      {% else %}
+        <span>Adjustable firmness</span>
+        <span>Lightweight and foldable</span>
+        <span>Ideal for planes, cars, and camping</span>
+      {% endif %}
     </div>
 
     <div class="kivo-product-form">
@@ -74,6 +92,8 @@
                 assign swatch_color = '#86cfff'
               elsif variant_name contains 'dark blue'
                 assign swatch_color = '#2453a6'
+              elsif variant_name contains 'deep blue'
+                assign swatch_color = '#123f8f'
               elsif variant_name contains 'dark purple'
                 assign swatch_color = '#4f327d'
               elsif variant_name contains 'purple'
@@ -152,21 +172,31 @@
         <strong>Product reviews</strong>
       </div>
       <article>
-        <p>"Comfortable for long trips and easy to store in my bag. The color selection was clear before adding it to cart."</p>
-        <strong>Emily R.</strong>
+        {% if is_wedge_product %}
+          <p>"The wedge shape gives better support than a flat pillow. I use it behind my back at home and it packs down easily."</p>
+          <strong>Sophie N.</strong>
+        {% else %}
+          <p>"Comfortable for long trips and easy to store in my bag. The color selection was clear before adding it to cart."</p>
+          <strong>Emily R.</strong>
+        {% endif %}
       </article>
       <article>
-        <p>"The product photos helped a lot. I could see the options, choose the variant, and review the cart before checkout."</p>
-        <strong>Marc S.</strong>
+        {% if is_wedge_product %}
+          <p>"Good for resting my legs after work. The photos showed the size and shape clearly before I ordered."</p>
+          <strong>Adam C.</strong>
+        {% else %}
+          <p>"The product photos helped a lot. I could see the options, choose the variant, and review the cart before checkout."</p>
+          <strong>Marc S.</strong>
+        {% endif %}
       </article>
     </div>
   </div>
 </section>
 
-<section class="kivo-product-review-section" aria-label="Inflatable Travel Pillow product reviews">
+<section class="kivo-product-review-section" aria-label="{{ product.title | escape }} product reviews">
   <div class="kivo-product-review-summary">
     <p class="kivo-product-eyebrow">Product reviews</p>
-    <h2>Inflatable Travel Pillow reviews</h2>
+    <h2>{{ product.title }} reviews</h2>
     <div class="kivo-product-review-score">
       <strong>4.8</strong>
       <div>
@@ -185,29 +215,47 @@
     <article>
       <div class="kivo-product-review-card__top">
         <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-        <strong>1pc-red</strong>
+        <strong>{% if is_wedge_product %}DEEP BLUE{% else %}1pc-red{% endif %}</strong>
       </div>
-      <h3>Great for flights</h3>
-      <p>"I used it on a long flight and liked how small it became after deflating. The red color matched the photos."</p>
-      <footer>Laura M. - Travel use</footer>
+      {% if is_wedge_product %}
+        <h3>Great back support</h3>
+        <p>"I used it on the sofa and at my desk. The wedge angle feels supportive and it deflates small enough to store away."</p>
+        <footer>Laura M. - Home comfort</footer>
+      {% else %}
+        <h3>Great for flights</h3>
+        <p>"I used it on a long flight and liked how small it became after deflating. The red color matched the photos."</p>
+        <footer>Laura M. - Travel use</footer>
+      {% endif %}
     </article>
     <article>
       <div class="kivo-product-review-card__top">
         <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-        <strong>Light blue</strong>
+        <strong>{% if is_wedge_product %}Leg support{% else %}Light blue{% endif %}</strong>
       </div>
-      <h3>Easy to pack</h3>
-      <p>"It fits in my backpack and is simple to inflate. I checked the cart before checkout and everything was clear."</p>
-      <footer>Daniel K. - Weekend trips</footer>
+      {% if is_wedge_product %}
+        <h3>Helpful after work</h3>
+        <p>"I use it under my knees and behind my back. It is simple to adjust the firmness and move from room to room."</p>
+        <footer>Daniel K. - Evening rest</footer>
+      {% else %}
+        <h3>Easy to pack</h3>
+        <p>"It fits in my backpack and is simple to inflate. I checked the cart before checkout and everything was clear."</p>
+        <footer>Daniel K. - Weekend trips</footer>
+      {% endif %}
     </article>
     <article>
       <div class="kivo-product-review-card__top">
         <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-        <strong>Camping</strong>
+        <strong>{% if is_wedge_product %}Office rest{% else %}Camping{% endif %}</strong>
       </div>
-      <h3>Useful outdoors</h3>
-      <p>"Bought it for camping and car rides. The gallery helped me see the shape and color before choosing."</p>
-      <footer>Marta R. - Outdoor comfort</footer>
+      {% if is_wedge_product %}
+        <h3>Good adjustable firmness</h3>
+        <p>"The product photos made the shape easy to understand. It feels stable when inflated and is light to carry."</p>
+        <footer>Marta R. - Office breaks</footer>
+      {% else %}
+        <h3>Useful outdoors</h3>
+        <p>"Bought it for camping and car rides. The gallery helped me see the shape and color before choosing."</p>
+        <footer>Marta R. - Outdoor comfort</footer>
+      {% endif %}
     </article>
   </div>
 </section>

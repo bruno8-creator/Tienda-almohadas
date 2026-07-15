@@ -1,11 +1,3 @@
-{% liquid
-  assign featured_product = all_products['air-cushion-pillows-outdoor-camping-folding-square-lnflatable-pillows-travel-backrest-plane-head-rest-pillow-camping']
-  assign product_url = '/products/air-cushion-pillows-outdoor-camping-folding-square-lnflatable-pillows-travel-backrest-plane-head-rest-pillow-camping?variant=54547796820310'
-  if featured_product != blank
-    assign product_url = featured_product.selected_or_first_available_variant.url
-  endif
-%}
-
 <section class="kivo-storefront full-width">
   <div class="kivo-storebar">
     <span>Secure Shopify checkout</span>
@@ -60,26 +52,32 @@
         <p class="kivo-eyebrow">Products</p>
         <h2>Shop all</h2>
       </div>
-      <p>{{ collections.all.products_count | default: 1 }} item available</p>
+      <p>{{ collections.all.products_count | default: 1 }} items available</p>
     </div>
 
     <div class="kivo-product-grid">
-      {% if featured_product != blank %}
-        <a class="kivo-product-tile" href="{{ product_url }}">
+      {% for product_item in collections.all.products %}
+        {% liquid
+          assign product_summary = 'Inflatable support for flights, road trips, camping, and quick rest stops.'
+          if product_item.handle contains 'wedge'
+            assign product_summary = 'Adjustable wedge support for your back, legs, arms, home, office, and travel.'
+          endif
+        %}
+        <a class="kivo-product-tile" href="{{ product_item.url }}">
           <div class="kivo-product-tile__image">
-            {{ featured_product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy' }}
+            {{ product_item.featured_image | image_url: width: 900 | image_tag: loading: 'lazy' }}
           </div>
           <div class="kivo-product-tile__body">
             <span class="kivo-product-tile__badge">In stock</span>
-            <h3>{{ featured_product.title }}</h3>
-            <p>Inflatable support for flights, road trips, camping, and quick rest stops.</p>
+            <h3>{{ product_item.title }}</h3>
+            <p>{{ product_summary }}</p>
             <div class="kivo-product-tile__footer">
-              <strong>{{ featured_product.price | money }}</strong>
+              <strong>{{ product_item.price | money }}</strong>
               <span>View product</span>
             </div>
           </div>
         </a>
-      {% endif %}
+      {% endfor %}
     </div>
   </div>
 
@@ -206,12 +204,10 @@
 
   .kivo-storebar,
   .kivo-shop-hero,
-  .kivo-review-feature,
   .kivo-category-row,
   .kivo-catalog,
   .kivo-store-info,
   .kivo-confidence-strip,
-  .kivo-reviews,
   .kivo-trust-panel,
   .kivo-faq {
     width: min(1180px, calc(100% - 32px));
@@ -247,7 +243,6 @@
   }
 
   .kivo-shop-hero > div,
-  .kivo-review-feature,
   .kivo-catalog,
   .kivo-store-info article {
     border: 1px solid rgba(44, 145, 255, 0.13);
@@ -303,50 +298,6 @@
     line-height: 1.1;
   }
 
-  .kivo-review-feature {
-    display: grid;
-    grid-template-columns: minmax(0, 0.9fr) repeat(2, minmax(0, 1fr));
-    gap: 1rem;
-    align-items: stretch;
-    margin-top: 1rem;
-    padding: clamp(1rem, 3vw, 1.25rem);
-  }
-
-  .kivo-review-feature h2 {
-    max-width: 11ch;
-    margin-top: 0.45rem;
-    font-size: clamp(1.9rem, 3.6vw, 3.6rem);
-  }
-
-  .kivo-review-feature article {
-    border: 1px solid rgba(44, 145, 255, 0.13);
-    border-radius: 24px;
-    background: #ffffff;
-    padding: 1rem;
-    box-shadow: 0 18px 45px rgba(34, 91, 160, 0.08);
-  }
-
-  .kivo-review-feature article p {
-    margin-top: 0.75rem;
-    color: #52657a;
-  }
-
-  .kivo-review-feature article strong,
-  .kivo-review-feature article span {
-    display: block;
-  }
-
-  .kivo-review-feature article strong {
-    margin-top: 0.9rem;
-    color: #102033;
-  }
-
-  .kivo-review-feature article span {
-    color: #8a9bae;
-    font-size: 0.9rem;
-    margin-top: 0.15rem;
-  }
-
   .kivo-category-row {
     display: flex;
     gap: 0.55rem;
@@ -371,7 +322,6 @@
   }
 
   .kivo-confidence-strip article,
-  .kivo-review-grid article,
   .kivo-trust-grid article,
   .kivo-faq-list details {
     border: 1px solid rgba(44, 145, 255, 0.13);
@@ -540,7 +490,6 @@
     margin-top: 0.45rem;
   }
 
-  .kivo-reviews,
   .kivo-trust-panel,
   .kivo-faq {
     margin-top: 1rem;
@@ -565,14 +514,12 @@
     font-size: clamp(2rem, 4vw, 4rem);
   }
 
-  .kivo-review-grid,
   .kivo-trust-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
   }
 
-  .kivo-review-grid article,
   .kivo-trust-grid article {
     border-radius: 24px;
     padding: 1rem;
@@ -581,38 +528,9 @@
       box-shadow 180ms ease;
   }
 
-  .kivo-review-grid article:hover,
   .kivo-trust-grid article:hover {
     box-shadow: 0 26px 70px rgba(34, 91, 160, 0.14);
     transform: translateY(-3px);
-  }
-
-  .kivo-review-stars {
-    color: #2c91ff;
-    font-size: 1.05rem;
-    letter-spacing: 0.08em;
-  }
-
-  .kivo-review-grid article p {
-    margin-top: 0.8rem;
-    color: #52657a;
-    font-size: 1rem;
-  }
-
-  .kivo-review-grid article strong,
-  .kivo-review-grid article span {
-    display: block;
-  }
-
-  .kivo-review-grid article strong {
-    margin-top: 1rem;
-    color: #102033;
-  }
-
-  .kivo-review-grid article span {
-    color: #8a9bae;
-    font-size: 0.9rem;
-    margin-top: 0.15rem;
   }
 
   .kivo-trust-grid article span {
@@ -676,9 +594,7 @@
     }
 
     .kivo-shop-hero,
-    .kivo-review-feature,
     .kivo-confidence-strip,
-    .kivo-review-grid,
     .kivo-trust-grid {
       grid-template-columns: 1fr;
     }
