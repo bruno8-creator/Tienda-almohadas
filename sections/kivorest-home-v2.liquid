@@ -59,8 +59,13 @@
       {% for product_item in collections.all.products %}
         {% liquid
           assign product_summary = 'Inflatable support for flights, road trips, camping, and quick rest stops.'
+          assign product_badge = 'New arrival'
           if product_item.handle contains 'wedge'
             assign product_summary = 'Adjustable wedge support for your back, legs, arms, home, office, and travel.'
+          endif
+          if product_item.compare_at_price_max > product_item.price
+            assign product_saving = product_item.compare_at_price_max | minus: product_item.price | times: 100 | divided_by: product_item.compare_at_price_max
+            assign product_badge = 'Save ' | append: product_saving | append: '%'
           endif
         %}
         <a class="kivo-product-tile" href="{{ product_item.url }}">
@@ -68,7 +73,7 @@
             {{ product_item.featured_image | image_url: width: 900 | image_tag: loading: 'lazy' }}
           </div>
           <div class="kivo-product-tile__body">
-            <span class="kivo-product-tile__badge">In stock</span>
+            <span class="kivo-product-tile__badge">{{ product_badge }}</span>
             <h3>{{ product_item.title }}</h3>
             <p>{{ product_summary }}</p>
             <div class="kivo-product-tile__footer">
